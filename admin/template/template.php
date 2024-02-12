@@ -10,11 +10,18 @@
 	<link rel="shortcut icon" href="<?php echo BASE_URL; ?>images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="<?php echo BASE_URL; ?>images/favicon.ico" type="image/x-icon" />
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-	<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" href="<?php echo BASE_URL; ?>admin/bootstrap/css/bootstrap.min.css"> <!-- BOOTSTRAP 5 -->
+	<link rel="stylesheet" href="<?php echo BASE_URL; ?>admin/bootstrap/bootstrap-lucasg.css"> <!-- CUSTOM -->
+	<!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/AdminLTE.min.css">
-	<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/skins/skin-blue.min.css">
-	<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/font-awesome.min.css">
+	<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/skins/skin-blue.min.css"> 
+	
+	<!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/font-awesome.min.css"> -->
+	<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/fontawesome.min.css">
+	<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/fonts/fontawesome/all.css">
+	<script src="<?php echo BASE_URL; ?>tools/fonts/fontawesome/all.js"></script>
+	
 	<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/ionicons.min.css">
 	<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $template_path; ?>style.css"/>
@@ -52,15 +59,15 @@
 	<aside class="main-sidebar">
 		<section class="sidebar">
 			<ul class="sidebar-menu" data-widget="tree">
-				<li class="header">MyAAC</li>
+				<li class="header">MyAAC v0.8.6</li>
 
 				<?php
 				$icons_a = array(
-                    'dashboard','newspaper-o', 'envelope',
-                    'book', 'list',
+                    'dashboard', 'newspaper', 'envelope',
+                    'book', 'user', 'list',
                     'plug', 'user',
                     'edit', 'gavel',
-                    'wrench', 'edit', 'book', 'book',
+                    'wrench', 'edit',
                 );
 
 				$menus = array(
@@ -68,6 +75,7 @@
 					'News' => 'news',
 					'Mailer' => 'mailer',
 					'Pages' => 'pages',
+					'Modifiers' => 'modifiers',
 					'Menus' => 'menus',
 					'Plugins' => 'plugins',
 					'Visitors' => 'visitors',
@@ -111,7 +119,7 @@
 
 						echo '<li class="treeview' . (($used_menu) ? ' menu-open' : '') . '">
                                       <a href="#"><i class="fa fa-' . (isset($icons_a[$i]) ? $icons_a[$i] : 'link') . '"></i> <span>' . $_name . '</span>
-						              <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+						              <span class="float-end"><i class="fa fa-angle-left float-end"></i></span></a>
 						              <ul class="treeview-menu" style="' . (($used_menu) ? '  display: block' : ' display: none') . '">';
 						echo $nav_construct;
 						echo '</ul>
@@ -131,6 +139,9 @@
 					}
 				}
 				?>
+				<li class="bg-danger">
+					<a href="?action=logout"><i class="fa fa-sign-out"></i> <span>Logout</span></a>
+				</li>
 			</ul>
 		</section>
 	</aside>
@@ -139,8 +150,8 @@
 		<section class="content-header">
 			<h1><?php echo(isset($title) ? $title : ''); ?>
 				<small> - Admin Panel</small>
-				<div class="pull-right">
-					<span class="label label-<?php echo(($status['online']) ? 'success' : 'danger'); ?>"><?php echo $config['lua']['serverName'] ?></span>
+				<div class="float-end">
+					<span class="badge bg-<?php echo(($status['online']) ? 'success' : 'danger'); ?>"><?php echo $config['lua']['serverName'] ?></span>
 				</div>
 			</h1>
 		</section>
@@ -152,16 +163,16 @@
 
 	<footer class="main-footer">
 
-		<div class="pull-right hidden-xs">
+		<div class="hidden-xs float-end">
 			<div id="status">
 				<?php if ($status['online']): ?>
-					<p class="success" style="width: 120px; text-align: center;">Server Online</p>
+					<p class="badge bg-success" style="width: 120px; text-align: center;">Server Online</p>
 				<?php else: ?>
-					<p class="error" style="width: 120px; text-align: center;">Server Offline</p>
+					<p class="badge bg-danger" style="width: 120px; text-align: center;">Server Offline</p>
 				<?php endif; ?>
 			</div>
 		</div>
-		<?php echo base64_decode('UG93ZXJlZCBieSA8YSBocmVmPSJodHRwOi8vbXktYWFjLm9yZyIgdGFyZ2V0PSJfYmxhbmsiPk15QUFDLjwvYT4='); ?>
+		Powered by MyAAC and edited by Lucas Giovanni.
 	</footer>
 
 	<aside class="control-sidebar control-sidebar-dark">
@@ -203,10 +214,10 @@
 
 					<div class="form-group">
 						<label class="control-sidebar-subheading">
-							<?php echo MYAAC_VERSION; ?> (<a href="?p=version">Check for updates</a>)<br/>
+							0.8.6 (<a href="?p=version">Check for updates</a>)<br/>
 						</label>
 						<label class="control-sidebar-subheading">
-							<p><a href="https://github.com/slawkens/myaac" target="_blank">Github</a></p>
+							<p><a href="https://github.com/lucaslking/myaac" target="_blank">Github</a></p>
 					</div>
 				</form>
 			</div>
@@ -221,7 +232,8 @@ if (!$logged && !admin()) {
 }
 ?>
 
-<script src="<?php echo BASE_URL; ?>tools/js/bootstrap.min.js"></script>
+<script src="<?php echo BASE_URL; ?>admin/bootstrap/js/bootstrap.min.js"></script> <!-- BOOTSTRAP 5 -->
+<!-- <script src="<?php echo BASE_URL; ?>tools/js/bootstrap.min.js"></script> -->
 <script src="<?php echo BASE_URL; ?>tools/js/jquery-ui.min.js"></script>
 <script src="<?php echo BASE_URL; ?>tools/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo BASE_URL; ?>tools/js/adminlte.min.js"></script>

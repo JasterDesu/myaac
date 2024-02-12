@@ -8,6 +8,7 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
+die(header('Location: ' . BASE_URL));
 $title = 'Gallery';
 
 $canEdit = hasFlag(FLAG_CONTENT_GALLERY) || superAdmin();
@@ -311,3 +312,4 @@ class Gallery
 		return !count($errors);
 	}
 }
+?>

@@ -15,3 +15,4 @@
 		foreach($boards as $id => $board)
 			$db->query('UPDATE `' . TABLE_PREFIX . 'forum_boards` SET `ordering` = ' . $id . ' WHERE `name` = ' . $db->quote($board));
 	}
+?>

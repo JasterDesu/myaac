@@ -14,11 +14,47 @@ $title = 'Create Account';
 if($config['account_country'])
 	require SYSTEM . 'countries.conf.php';
 
-if($logged)
-{
-	echo 'Please logout before attempting to create a new account.';
-	return;
-}
+	if($logged)
+	{
+	?>
+	<div class="TableContainer">
+	<div class="CaptionContainer">
+	<div class="CaptionInnerContainer">
+		<span class="CaptionEdgeLeftTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+		<span class="CaptionEdgeRightTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+		<span class="CaptionBorderTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/table-headline-border.gif);"></span>
+		<span class="CaptionVerticalLeft" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-vertical.gif);"></span>
+		<div class="Text">Please logout before attempting to create a new account.</div>
+		<span class="CaptionVerticalRight" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-vertical.gif);"></span>
+		<span class="CaptionBorderBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/table-headline-border.gif);"></span>
+		<span class="CaptionEdgeLeftBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+		<span class="CaptionEdgeRightBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+	</div></div>
+	<table class="Table3" cellpadding="0" cellspacing="0">
+	<tbody><tr>
+	<td>
+	<div class="InnerTableContainer">
+	<table style="width:100%;"><tbody><tr><td>
+	<div class="TableContentContainer">
+	<table class="TableContent" width="100%" style="border:1px solid #faf0d7;">
+	<tbody>
+	<tr bgcolor="#F1E0C6">
+		<td>Please logout before attempting to create a new account.</td>
+	</tr>
+	</tbody></table>
+	</div></td></tr>
+	</tbody></table>
+	</div>
+	</td>
+	</tr>
+	</tbody></table></div>
+	<br>
+	<div style="width: 135px; margin: 0 auto;">
+	<div class="BigButton" style="background-image:url(<?php echo $template_path; ?>/images/global/buttons/sbutton.gif)"><a href="?account/manage"><div onmouseover="MouseOverBigButton(this);" onmouseout="MouseOutBigButton(this);"><div class="BigButtonOver" style="background-image: url(<?php echo $template_path; ?>/images/global/buttons/sbutton_over.gif); visibility: hidden;"></div><input class="BigButtonText" type="button" value="Login"></div></a></div>
+	</div>
+	<?php
+		return;
+	}
 
 if(config('account_create_character_create')) {
 	require_once LIBS . 'CreateCharacter.php';
@@ -165,6 +201,7 @@ if($save)
 
 		$new_account->setPassword(encrypt($password));
 		$new_account->setEMail($email);
+		$new_account->unblock();
 		$new_account->save();
 
 		if($config_salt_enabled)
@@ -182,13 +219,8 @@ if($save)
 				$new_account->setCustomField('premend', time() + $config['account_premium_days'] * 86400);
 			}
 			else { // rest
-				if ($db->hasColumn('accounts', 'premium_ends_at')) { // TFS 1.4+
-					$new_account->setCustomField('premium_ends_at', time() + $config['account_premium_days'] * (60 * 60 * 24));
-				}
-				else {
-					$new_account->setCustomField('premdays', $config['account_premium_days']);
-					$new_account->setCustomField('lastday', time());
-				}
+				$new_account->setCustomField('premdays', $config['account_premium_days']);
+				$new_account->setCustomField('lastday', time());
 			}
 		}
 
@@ -232,7 +264,6 @@ if($save)
 				$character_created = $createCharacter->doCreate($character_name, $character_sex, $character_vocation, $character_town, $new_account, $errors);
 				if (!$character_created) {
 					error('There was an error creating your character. Please create your character later in account management page.');
-					error(implode(' ', $errors));
 				}
 			}
 

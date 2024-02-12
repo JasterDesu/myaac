@@ -66,3 +66,4 @@ else
 	echo "0 players found.";
 
 $twig->display('guilds.back_button.html.twig');
+?>

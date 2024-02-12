@@ -1,0 +1,12 @@
+{
+    "name": "root/pages",
+    "authors": [
+        {
+            "name": "jackye",
+            "email": "jackson.ie@live.com"
+        }
+    ],
+    "require": {
+        "mercadopago/dx-php": "2.5.1"
+    }
+}

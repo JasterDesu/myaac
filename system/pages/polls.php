@@ -9,6 +9,7 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
+die(header('Location: ' . BASE_URL));
 $title = 'Polls';
 
 /* Polls System By Averatec from pervera.pl & otland.net */
@@ -30,23 +31,59 @@ function getColorByPercent($percent)
     $dark = $config['darkborder'];
     $light = $config['lightborder'];
     $time = time();
-    $POLLS = $db->query('SELECT * FROM '.$db->tableName('z_polls').'');
+    $POLLS = $db->query('SELECT * FROM '.$db->tableName('myaac_polls').'');
     $level = 20; // need level to vote
 
     if(empty($_REQUEST['id']) and (!isset($_REQUEST['control']) || $_REQUEST['control'] != "true"))  // list of polls
     {
-        $active = $db->query('SELECT * FROM `z_polls` where `end` > '.$time.''); // active polls
-        $closed = $db->query('SELECT * FROM `z_polls` where `end` < '.$time.' order by `end` desc'); // closed polls
+        $active = $db->query('SELECT * FROM `myaac_polls` where `end` > '.$time.''); // active polls
+        $closed = $db->query('SELECT * FROM `myaac_polls` where `end` < '.$time.' order by `end` desc'); // closed polls
         /* Active Polls */
-        echo '<TABLE BORDER=0 CELLSPACING=1 CELLPADDING=4 WIDTH=100%><TR BGCOLOR='.$config['vdarkborder'].'><TD COLSPAN=2 class=white><B>Active Polls</B></TD></TR>';
-        echo '<TR BGCOLOR="' . getStyle($number_of_rows++) . '"><td width=75%><b>Topic</b></td><td><b>End</b></td></tr>';
-        $bgcolor = getStyle($number_of_rows++);
-		$empty_active = false;
-        foreach($active as $poll)
-        {
+?>
+
+<b>Welcome to the poll section!</b>
+<br>
+<br>
+Let us and the Tibia community know what you think! Click on an active poll from the list below to get further details and to submit your vote.
+<br>
+<br>
+
+<div class="TableContainer">
+	<div class="CaptionContainer">
+			<div class="CaptionInnerContainer">
+				<span class="CaptionEdgeLeftTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+				<span class="CaptionEdgeRightTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+				<span class="CaptionBorderTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/table-headline-border.gif);"></span>
+				<span class="CaptionVerticalLeft" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-vertical.gif);"></span>
+				<div class="Text">Active Polls</div>
+				<span class="CaptionVerticalRight" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-vertical.gif);"></span>
+				<span class="CaptionBorderBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/table-headline-border.gif);"></span>
+				<span class="CaptionEdgeLeftBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+				<span class="CaptionEdgeRightBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+			</div>
+		</div><table class="Table3" cellpadding="0" cellspacing="0">
+
+		<tbody><tr>
+			<td>
+				<div class="InnerTableContainer">
+					<table style="width:100%;">
+						<tbody>
+<tr><td>
+<div class="TableContentContainer">
+<table class="TableContent" width="100%" style="border:1px solid #faf0d7;">
+<tbody>
+<tr bgcolor="#F1E0C6">
+<td class="LabelV175" width="70%">Topic</td>
+<td class="LabelV175" style="text-align: right;">End</td>
+</tr>
+<?php
+	
+	$empty_active = false;
+	foreach($active as $poll) {
+		$bgcolor = getStyle($number_of_rows++);
             echo '
-            <tr BGCOLOR="'.$bgcolor.'">
-				<td>
+            <tr bgcolor="'.$bgcolor.'">
+				<td width="70%">
 					<a href="';
 					if($logged)
 						echo '?subtopic='.$link.'&id='.$poll['id'];
@@ -55,27 +92,63 @@ function getColorByPercent($percent)
 
 					echo '">'.$poll['question'] . '</a>
 				</td>
-				<td>'.date("M j Y", $poll['end']).'</td>
+				<td style="text-align: right;">'.date("M j Y", $poll['end']).'</td>
 			</tr>';
-            $empty_active = true;
-        }
+			$empty_active = true;
+	}
+	
+	if(!$empty_active) {
+		echo '<tr bgcolor="'.$bgcolor.'"><td colspan=2><div style="text-align:center"><i>There are no active polls.</i></div></td></tr>';
+	}
+?>
+</tbody></table>
+</div></td></tr>
 
-        if(!$empty_active)
-        {
-            echo '<tr BGCOLOR="'.$bgcolor.'"><td colspan=2><div style="text-align:center"><i>There are no active polls.</i></div></td></tr>';
-        }
+					</tbody></table>
+				</div>
+			</td>
+		</tr>
+	</tbody></table>
+</div>
 
-        echo "</table><br><br>";
-        /* Closed Polls */
-        echo '<TABLE BORDER=0 CELLSPACING=1 CELLPADDING=4 WIDTH=100%><TR BGCOLOR='.$config['vdarkborder'].'><TD COLSPAN=2 class=white><B>Closed Polls</B></TD></TR>';
-        echo '<TR BGCOLOR="' . getStyle($number_of_rows++) . '"><td width=75%><b>Topic</b></td><td><b>End</b></td></tr>';
-		$bgcolor = getStyle($number_of_rows++);
+<br>
+
+<div class="TableContainer">
+	<div class="CaptionContainer">
+			<div class="CaptionInnerContainer">
+				<span class="CaptionEdgeLeftTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+				<span class="CaptionEdgeRightTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+				<span class="CaptionBorderTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/table-headline-border.gif);"></span>
+				<span class="CaptionVerticalLeft" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-vertical.gif);"></span>
+				<div class="Text">Closed Polls</div>
+				<span class="CaptionVerticalRight" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-vertical.gif);"></span>
+				<span class="CaptionBorderBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/table-headline-border.gif);"></span>
+				<span class="CaptionEdgeLeftBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+				<span class="CaptionEdgeRightBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+			</div>
+		</div><table class="Table3" cellpadding="0" cellspacing="0">
+
+		<tbody><tr>
+			<td>
+				<div class="InnerTableContainer">
+					<table style="width:100%;">
+						<tbody>
+<tr><td>
+<div class="TableContentContainer">
+<table class="TableContent" width="100%" style="border:1px solid #faf0d7;">
+<tbody>
+<tr bgcolor="#F1E0C6">
+<td class="LabelV175" width="70%">Topic</td>
+<td class="LabelV175" style="text-align: right;">End</td>
+</tr>
+<?php
+	$bgcolor = getStyle($number_of_rows++);
 		$empty_closed = false;
         foreach($closed as $poll)
         {
             echo '
-            <tr BGCOLOR="'.$bgcolor.'">
-				<td>
+            <tr bgcolor="'.$bgcolor.'">
+				<td width="70%">
 					<a href="';
 					if($logged)
 						echo '?subtopic='.$link.'&id='.$poll['id'];
@@ -84,7 +157,7 @@ function getColorByPercent($percent)
 
 					echo '">'.$poll['question'] . '</a>
 				</td>
-				<td>'.date("M j Y", $poll['end']).'</td>
+				<td style="text-align: right;">'.date("M j Y", $poll['end']).'</td>
 			</tr>';
             $empty_closed = true;
         }
@@ -93,9 +166,22 @@ function getColorByPercent($percent)
         {
             echo '<tr BGCOLOR="'.$bgcolor.'"><td colspan=2><div style="text-align:center"><i>There are no closed polls.</i></div></td></tr>';
         }
+?>
+</tbody></table>
+</div></td></tr>
 
-        echo "</table>";
-        $showed=true;
+					</tbody></table>
+				</div>
+			</td>
+		</tr>
+	</tbody></table>
+</div>
+
+<br>
+
+<?php
+$showed=true;
+
     }
 
 	if(!$logged)
@@ -120,7 +206,7 @@ function getColorByPercent($percent)
         {
             if($_REQUEST['id'] == $POLL['id'])
             {
-                $ANSWERS = $db->query('SELECT * FROM '.$db->tableName('z_polls_answers').' where `poll_id` = '.addslashes(htmlspecialchars(trim($_REQUEST['id']))).' order by `answer_id`');
+                $ANSWERS = $db->query('SELECT * FROM '.$db->tableName('myaac_polls_answers').' where `poll_id` = '.addslashes(htmlspecialchars(trim($_REQUEST['id']))).' order by `answer_id`');
                 $votes_all = $POLL['votes_all'];
 
                 if($votes_all == 0)
@@ -176,8 +262,8 @@ function getColorByPercent($percent)
                             {
                                 $vote = addslashes(htmlspecialchars(trim($_REQUEST['id'])));
                                 $account_logged->setCustomField("vote", $vote);
-                                $UPDATE_poll = $db->query('UPDATE `z_polls` SET `votes_all` = `votes_all` + 1 where `id` = '.addslashes(htmlspecialchars(trim($_REQUEST['id']))).'');
-                                $UPDATE_answer = $db->query('UPDATE `z_polls_answers` SET `votes` = `votes` + 1 where `answer_id` = '.addslashes(htmlspecialchars($_POST['answer'])).' and`poll_id` = '.addslashes(htmlspecialchars(trim($_REQUEST['id']))).'');
+                                $UPDATE_poll = $db->query('UPDATE `myaac_polls` SET `votes_all` = `votes_all` + 1 where `id` = '.addslashes(htmlspecialchars(trim($_REQUEST['id']))).'');
+                                $UPDATE_answer = $db->query('UPDATE `myaac_polls_answers` SET `votes` = `votes` + 1 where `answer_id` = '.addslashes(htmlspecialchars($_POST['answer'])).' and`poll_id` = '.addslashes(htmlspecialchars(trim($_REQUEST['id']))).'');
                                 header('Location: ?subtopic='.$link.'&id='.$_REQUEST['id'].'');
                             }
                         }
@@ -192,7 +278,7 @@ function getColorByPercent($percent)
                         echo '<TABLE BORDER=0 CELLSPACING=1 CELLPADDING=4 WIDTH=100%><TR BGCOLOR='.$config['vdarkborder'].'><TD COLSPAN=2 class=white><B>Vote</B></TD></TR>';
                         echo '<TR BGCOLOR="'.$dark.'"><td COLSPAN=2><b>'.$POLL['question'].'</b><br/>' . $POLL['description'] . '</td></tr>
                         <form action="?subtopic='.$link.'&id='.$_REQUEST['id'].'&vote=true" method="POST"> ';
-                        $ANSWERS_input = $db->query('SELECT * FROM '.$db->tableName('z_polls_answers').' where `poll_id` = '.$_REQUEST['id'].' order by `answer_id`');
+                        $ANSWERS_input = $db->query('SELECT * FROM '.$db->tableName('myaac_polls_answers').' where `poll_id` = '.$_REQUEST['id'].' order by `answer_id`');
                         $i=1;
                         foreach($ANSWERS_input as $answer)
                         {
@@ -214,7 +300,7 @@ function getColorByPercent($percent)
 
 						echo '<TABLE BORDER=0 CELLSPACING=1 CELLPADDING=4 WIDTH=100%><TR BGCOLOR='.$config['vdarkborder'].'><TD COLSPAN=3 class=white><B>Results</B></TD></TR>';
 						echo '<TR BGCOLOR="'.$dark.'"><td COLSPAN=3><b>'.$POLL['question'].'</b><br/>' . $POLL['description'] . '</td></tr>';
-						$ANSWERS_show = $db->query('SELECT * FROM '.$db->tableName('z_polls_answers').' where `poll_id` = '.$_REQUEST['id'].' order by `answer_id`');
+						$ANSWERS_show = $db->query('SELECT * FROM '.$db->tableName('myaac_polls_answers').' where `poll_id` = '.$_REQUEST['id'].' order by `answer_id`');
 						$i=1;
 						foreach($ANSWERS_show as $answer)
 						{
@@ -253,7 +339,7 @@ function getColorByPercent($percent)
                 {
                     echo '<TABLE BORDER=0 CELLSPACING=1 CELLPADDING=4 WIDTH=100%><TR BGCOLOR='.$config['vdarkborder'].'><TD COLSPAN=3 class=white><B>Results</B></TD></TR>';
                     echo '<TR BGCOLOR="'.$dark.'"><td COLSPAN=3><b>'.$POLL['question'].'</b></td></tr>';
-                    $ANSWERS_show = $db->query('SELECT * FROM '.$db->tableName('z_polls_answers').' where `poll_id` = '.$_REQUEST['id'].' order by `answer_id`');
+                    $ANSWERS_show = $db->query('SELECT * FROM '.$db->tableName('myaac_polls_answers').' where `poll_id` = '.$_REQUEST['id'].' order by `answer_id`');
                     $i=1;
                     foreach($ANSWERS_show as $answer)
                     {
@@ -287,9 +373,15 @@ function getColorByPercent($percent)
         }
     }
 
-    if(admin() && (!isset($_REQUEST['control']) || $_REQUEST['control'] != "true"))
-    {
-        echo '<br><a href="?subtopic='.$link.'&control=true"><b>Panel Control</b></a><br><br>';
+    if(admin() && (!isset($_REQUEST['control']) || $_REQUEST['control'] != "true")) {
+?>
+<a href="?subtopic=<?php echo $link ?>&control=true">
+<div class="BigButton" style="background-image:url(<?php echo $template_path; ?>/images/global/buttons/sbutton.gif)">
+	<div onmouseover="MouseOverBigButton(this);" onmouseout="MouseOutBigButton(this);"><div class="BigButtonOver" style="background-image: url(<?php echo $template_path; ?>/global/buttons/sbutton_over.gif); visibility: hidden;"></div>
+		<input class="BigButtonText" type="submit" name="View" alt="View" value="Panel Control"></div>
+</div>
+</a>
+<?php
     }
 
     /* Control Panel - Only Add Poll Function */
@@ -315,12 +407,12 @@ function getColorByPercent($percent)
 
         if(isset($_POST['finish']))
         {
-                $id = $db->query('SELECT MAX(id) FROM `z_polls`')->fetch();
+                $id = $db->query('SELECT MAX(id) FROM `myaac_polls`')->fetch();
                 $id_next = $id[0] + 1;
 
                 for( $x = 1; $x <= getSession('answers'); $x++ )
                 {
-                	$db->insert('z_polls_answers', array(
+                	$db->insert('myaac_polls_answers', array(
                 		'poll_id' => $id_next,
 						'answer_id' => $x,
 						'answer' => $_POST[$x],
@@ -328,7 +420,7 @@ function getColorByPercent($percent)
 					));
                 }
                 $end = $time+24*60*60*$_POST['end'];
-                $db->insert('z_polls', array(
+                $db->insert('myaac_polls', array(
                 	'id' => $id_next,
 					'question' => $_POST['question'],
 					'description' => $_POST['description'],
@@ -339,7 +431,7 @@ function getColorByPercent($percent)
 				));
         }
 
-        $POLLS_check = $db->query('SELECT MAX(end) FROM '.$db->tableName('z_polls').'');
+        $POLLS_check = $db->query('SELECT MAX(end) FROM '.$db->tableName('myaac_polls').'');
         foreach($POLLS_check as $checked)
         {
             if($checked[0] > $time)
@@ -369,3 +461,4 @@ function getColorByPercent($percent)
         echo 'This poll doesn\'t exist.<br>';
         echo '<div class=\'hr1\'></div><a href="?subtopic='.$link.'"><span style="font-size: 13px"><b>Go to list of  polls</b></span></a>';
     }
+?>

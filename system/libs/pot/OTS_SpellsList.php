@@ -95,8 +95,8 @@ class OTS_SpellsList implements IteratorAggregate, Countable
     {
 		// check if spells.xml exist
 		if(!@file_exists($file)) {
-			log_append('error.log', '[OTS_SpellsList.php] Fatal error: Cannot load spells.xml. File does not exist. (' . $file . ').');
-			throw new Exception('Error: Cannot load spells.xml. File not found.');
+			log_append('error.log', '[OTS_SpellsList.php] Fatal error: Cannot load spells.xml. File does not exist. (' . $file . '). Error: ' . print_r(error_get_last(), true));
+			throw new Exception('Error: Cannot load spells.xml. File not found. More info in system/logs/error.log file.');
 		}
 		
         // loads monsters mapping file
@@ -308,7 +308,7 @@ class OTS_SpellsList implements IteratorAggregate, Countable
  * @since 0.1.5
  * @return AppendIterator Iterator for all spells.
  */
-    public function getIterator(): Traversable
+    public function getIterator()
     {
         $iterator = new AppendIterator();
         $iterator->append( new ArrayIterator($this->runes) );
@@ -324,7 +324,7 @@ class OTS_SpellsList implements IteratorAggregate, Countable
  * @since 0.1.5
  * @return int Amount of all spells.
  */
-    public function count(): int
+    public function count()
     {
         return count($this->runes) + count($this->instants) + count($this->conjures);
     }

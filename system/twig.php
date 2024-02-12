@@ -14,11 +14,6 @@ $twig = new Twig_Environment($twig_loader, array(
 	'debug' => $dev_mode
 ));
 
-$twig_loader->addPath(PLUGINS);
-
-$twig->addGlobal('logged', false);
-$twig->addGlobal('account_logged', new OTS_Account());
-
 if($dev_mode) {
 	$twig->addExtension(new Twig_DebugExtension());
 }
@@ -44,23 +39,15 @@ $function = new TwigFunction('getGuildLink', function ($s, $p) {
 });
 $twig->addFunction($function);
 
-$function = new TwigFunction('hook', function ($context, $hook, array $params = []) {
+$function = new TwigFunction('hook', function ($hook) {
 	global $hooks;
 
 	if(is_string($hook)) {
-		if (defined($hook)) {
-			$hook = constant($hook);
-		}
-		else {
-			// plugin/template has a hook that this version of myaac does not support
-			// just silently return
-			return;
-		}
+		$hook = constant($hook);
 	}
 
-	$params['context'] = $context;
-	$hooks->trigger($hook, $params);
-}, ['needs_context' => true]);
+	$hooks->trigger($hook);
+});
 $twig->addFunction($function);
 
 $function = new TwigFunction('config', function ($key) {

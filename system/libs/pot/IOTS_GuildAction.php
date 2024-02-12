@@ -67,3 +67,5 @@ interface IOTS_GuildAction
 }
 
 /**#@-*/
+
+?>

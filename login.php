@@ -238,10 +238,10 @@ switch ($action) {
 			$sessionKey .= "\n".floor(time() / 30);
 		}
 
-		//log_append('slaw.log', $sessionKey);
-
+		// request
 		$session = [
-			'sessionkey' => $sessionKey,
+			// 'sessionkey' => $sessionKey,
+			'sessionkey' => "$request->email\n$request->password",
 			'lastlogintime' => 0,
 			'ispremium' => $config['lua']['freePremium'] || $account->isPremium(),
 			'premiumuntil' => ($account->getPremDays()) > 0 ? (time() + ($account->getPremDays() * 86400)) : 0,

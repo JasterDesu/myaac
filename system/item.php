@@ -58,3 +58,4 @@ function outputItem($id = 100, $count = 1)
 	$file_name = Items_Images::$outputDir . $file_name . '.gif';
 	readfile($file_name);
 }
+?>

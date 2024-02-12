@@ -529,3 +529,5 @@ class OTS_House extends OTS_Row_DAO
 }
 
 /**#@-*/
+
+?>

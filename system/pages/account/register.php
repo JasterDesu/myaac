@@ -55,3 +55,5 @@ if($show_form) {
 	//show form
 	$twig->display('account.generate_recovery_key.html.twig');
 }
+
+?>

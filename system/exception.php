@@ -23,8 +23,6 @@ function exception_handler($exception) {
 
 	$backtrace_formatted = nl2br($exception->getTraceAsString());
 
-	$message = $message . "<br/><br/>File: {$exception->getFile()}<br/>Line: {$exception->getLine()}";
-
 	// display basic error message without template
 	// template is missing, why? probably someone deleted templates dir, or it wasn't downloaded right
 	$template_file = SYSTEM . 'templates/exception.html.twig';
@@ -42,7 +40,6 @@ function exception_handler($exception) {
 	// cause in case Twig throws exception, we can show it too
 	$content = file_get_contents($template_file);
 	$content = str_replace(array('{{ BASE_URL }}', '{{ exceptionClass }}', '{{ message }}', '{{ backtrace }}', '{{ powered_by }}'), array(BASE_URL, get_class($exception), $message, $backtrace_formatted, base64_decode('UG93ZXJlZCBieSA8YSBocmVmPSJodHRwOi8vbXktYWFjLm9yZyIgdGFyZ2V0PSJfYmxhbmsiPk15QUFDLjwvYT4=')), $content);
-
 	echo $content;
 }
 

@@ -9,13 +9,8 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
+// die(header('Location: ' . BASE_URL));
 $title = 'Bans list';
-
-if($config['otserv_version'] == TFS_02)
-{
-	echo 'Bans page doesnt work on TFS 0.2/1.0.';
-	return;
-}
 
 if(!$config['bans_display_all'])
 	echo 'Last ' . $config['bans_limit'] . ' banishments.<br/><br/>';
@@ -26,11 +21,39 @@ if($config['bans_display_all'])
 	$offset = $_page * $config['bans_limit'] + 1;
 }
 
-$bans = $db->query('SELECT * FROM ' . $db->tableName('bans') . ' WHERE ' . $db->fieldName('active') . ' = 1 ORDER BY ' . $db->fieldName('added') . ' DESC LIMIT ' . ($config['bans_limit'] + 1) . (isset($offset) ? ' OFFSET ' . $offset : ''));
+$bans = $db->query('SELECT * FROM ' . $db->tableName('account_bans') . '');
 if(!$bans->rowCount())
 {
 ?>
-	There are no banishments yet.
+<div class="TableContainer">
+	<div class="CaptionContainer">
+			<div class="CaptionInnerContainer">
+				<span class="CaptionEdgeLeftTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+				<span class="CaptionEdgeRightTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+				<span class="CaptionBorderTop" style="background-image:url(<?php echo $template_path; ?>/images/global/content/table-headline-border.gif);"></span>
+				<span class="CaptionVerticalLeft" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-vertical.gif);"></span>
+				<div class="Text">Banishments</div>
+				<span class="CaptionVerticalRight" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-vertical.gif);"></span>
+				<span class="CaptionBorderBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/table-headline-border.gif);"></span>
+				<span class="CaptionEdgeLeftBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+				<span class="CaptionEdgeRightBottom" style="background-image:url(<?php echo $template_path; ?>/images/global/content/box-frame-edge.gif);"></span>
+			</div>
+		</div><table class="Table1" cellpadding="0" cellspacing="0">
+
+		<tbody><tr>
+			<td>
+				<div class="InnerTableContainer">
+					<table style="width:100%;">
+						<tbody><tr>
+							<td><p>No players banned. </p>
+							</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</td>
+		</tr>
+	</tbody></table>
+</div>
 <?php
 	return;
 }
@@ -202,3 +225,4 @@ function getPlayerNameByAccount($id)
 
 	return '';
 }
+?>

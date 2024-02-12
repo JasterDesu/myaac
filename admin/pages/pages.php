@@ -105,7 +105,7 @@ $twig->display('admin.pages.form.html.twig', array(
 	'title' => $p_title,
 	'php' => $php,
 	'enable_tinymce' => $enable_tinymce,
-	'body' => isset($body) ? escapeHtml($body) : '',
+	'body' => isset($body) ? htmlentities($body, ENT_COMPAT, 'UTF-8') : '',
 	'groups' => $groups->getGroups(),
 	'access' => $access
 ));
@@ -196,3 +196,5 @@ class Pages
 		return !count($errors);
 	}
 }
+
+?>

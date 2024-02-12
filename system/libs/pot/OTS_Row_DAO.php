@@ -75,3 +75,5 @@ abstract class OTS_Row_DAO extends OTS_Base_DAO
 }
 
 /**#@-*/
+
+?>

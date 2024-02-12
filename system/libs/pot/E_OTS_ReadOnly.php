@@ -22,3 +22,5 @@ class E_OTS_ReadOnly extends Exception
 }
 
 /**#@-*/
+
+?>

@@ -23,11 +23,11 @@
  * @copyright 2019 MyAAC
  * @link      https://my-aac.org
  */
-if (version_compare(phpversion(), '7.2.5', '<')) die('PHP version 7.2.5 or higher is required.');
+if (version_compare(phpversion(), '5.6', '<')) die('PHP version 5.6 or higher is required.');
 
 define('MYAAC', true);
-define('MYAAC_VERSION', '0.8.16-dev');
-define('DATABASE_VERSION', 33);
+define('MYAAC_VERSION', '0.8.6');
+define('DATABASE_VERSION', 32);
 define('TABLE_PREFIX', 'myaac_');
 define('START_TIME', microtime(true));
 define('MYAAC_OS', stripos(PHP_OS, 'WIN') === 0 ? 'WINDOWS' : (strtoupper(PHP_OS) === 'DARWIN' ? 'MAC' : 'LINUX'));
@@ -73,7 +73,10 @@ define('MENU_CATEGORY_ACCOUNT', 2);
 define('MENU_CATEGORY_COMMUNITY', 3);
 define('MENU_CATEGORY_FORUM', 4);
 define('MENU_CATEGORY_LIBRARY', 5);
+define('MENU_CATEGORY_SUPPORT', 8);
+define('MENU_CATEGORY_CHARSHOP', 9);
 define('MENU_CATEGORY_SHOP', 6);
+define('MENU_CATEGORY_CHARBAAZAR', 7);
 
 // otserv versions
 define('OTSERV', 1);
@@ -85,10 +88,8 @@ define('TFS_03', 4);
 define('TFS_FIRST', TFS_02);
 define('TFS_LAST', TFS_03);
 
-if (!IS_CLI) {
-	session_save_path(SYSTEM . 'php_sessions');
-	session_start();
-}
+session_save_path(SYSTEM . 'php_sessions');
+session_start();
 
 // basedir
 $basedir = '';
@@ -97,12 +98,8 @@ $size = count($tmp) - 1;
 for($i = 1; $i < $size; $i++)
 	$basedir .= '/' . $tmp[$i];
 
-$basedir = str_replace(array('/admin', '/install', '/tools'), '', $basedir);
+$basedir = str_replace(array('/admin', '/install'), '', $basedir);
 define('BASE_DIR', $basedir);
-
-if (file_exists(BASE . 'config.local.php')) {
-	require BASE . 'config.local.php';
-}
 
 if(!IS_CLI) {
 	if (isset($_SERVER['HTTP_HOST'][0])) {
@@ -120,8 +117,7 @@ if(!IS_CLI) {
 	define('ADMIN_URL', SERVER_URL . BASE_DIR . '/admin/');
 
 	//define('CURRENT_URL', BASE_URL . $_SERVER['REQUEST_URI']);
-	if(@$config['env'] === 'dev') {
-		require SYSTEM . 'exception.php';
-	}
+
+	require SYSTEM . 'exception.php';
 }
 require SYSTEM . 'autoload.php';

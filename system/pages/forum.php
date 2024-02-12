@@ -9,6 +9,7 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
+die(header('Location: ' . BASE_URL));
 $title = 'Forum';
 
 if(strtolower($config['forum']) != 'site')
@@ -165,6 +166,7 @@ if(empty($action))
 
 	$twig->display('forum.boards.html.twig', array(
 		'boards' => $boards,
+		'currentTime' => date('H:i'),
 		'canEdit' => $canEdit,
 		'last' => count($sections)
 	));
@@ -191,13 +193,12 @@ if(!$logged)
 }
 
 if(!ctype_alnum(str_replace(array('-', '_'), '', $action))) {
-	$errors[] = 'Error: Action contains illegal characters.';
-	displayErrorBoxWithBackButton($errors, getLink('forum'));
+	error('Error: Action contains illegal characters.');
 }
 else if(file_exists(PAGES . 'forum/' . $action . '.php')) {
 	require PAGES . 'forum/' . $action . '.php';
 }
 else {
-	$errors[] = 'This page does not exists.';
-	displayErrorBoxWithBackButton($errors, getLink('forum'));
+	error('This page does not exists.');
 }
+?>

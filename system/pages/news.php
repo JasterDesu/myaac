@@ -1,4 +1,57 @@
 <?php
+if($config['banner_status'] == true){
+?>
+<style>
+._banner_container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1055;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	outline: 0;
+	text-align: center;
+	padding: 64px 0px;
+	background-color: #0000008a;
+}
+._banner_image {
+	max-width: 598px;
+}
+._close_btn {
+	max-height: 17px;
+}
+._close_lbl {
+	font-size: 20px;
+	color: red;
+}
+</style>
+
+<script type="text/javascript">
+function hideBannerContainer()
+{
+	$("#_banner_modal").css("display","none");
+}
+</script>
+
+<div class="_banner_container" id="_banner_modal" onclick="hideBannerContainer()">
+	<a href="<?php echo $config['banner_link'] ?>">
+		<img class="_banner_image" src="<?php echo $template_path; ?>/images/<?php echo $config['banner_image'] ?>" />
+	</a>
+	<br>
+	
+	
+	<b class="_close_lbl"><img class="_close_btn" src="<?php echo $template_path; ?>/images/close_button2.png"> Fechar</b>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#_banner_container").modal('show');
+});
+</script>
+<?php } ?>
+<?php
 /**
  * News
  *
@@ -148,7 +201,7 @@ if(!$news_cached)
 					'text' => $article['article_text'],
 					'image' => $article['article_image'],
 					'hidden' => $article['hidden'],
-					'read_more'=> getLink('news/archive/') . $article['id']
+					// 'read_more'=> getLink('news/archive/') . $article['id']
 				),
 				'canEdit' => $canEdit
 			));

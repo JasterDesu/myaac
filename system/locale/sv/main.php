@@ -12,3 +12,4 @@ $locale['direction']= 'ltr';
 
 $locale['error404'] = 'Sidan kunde inte hittas.';
 $locale['news'] = 'Senaste nyheterna';
+?>

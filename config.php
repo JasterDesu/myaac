@@ -18,8 +18,25 @@
 
 $config = array(
 	// directories & files
-	'server_path' => '', // path to the server directory (same directory where config file is located)
-
+	'server_path' => '/home/canary/', // path to the server directory (same directory where config file is located)
+	
+	// 'donate_bonus' => [
+		// [1, 99, 1.0],
+		// [100, 199, 1.1],
+		// [200, 499, 1.2],
+		// [500, 1000000, 1.3],
+	// ],
+	
+	'bar_links' => [
+		'discord' => 'https://discord.gg/nscyDcFHPR',
+		'whatsapp' => 'https://chat.whatsapp.com/I6SJKXdLNn0HDz6SeEE2tR',
+		'facebook' => 'https://www.facebook.com/otmeraki/',
+		'instagram' => 'https://www.instagram.com/otmeraki/',
+		'youtube' => 'https://www.youtube.com/channel/UCqg1wlCdNTyVher5CldpfEQ',
+		'download' => '?downloadclient',
+		'serverinfo' => '?serverinfo',
+	],
+	
 	/**
 	 * Environment Setting
 	 *
@@ -31,14 +48,14 @@ $config = array(
 	 */
 	'env' => 'prod', // 'prod' for production and 'dev' for development
 
-	'template' => 'kathrine', // template used by website (kathrine, tibiacom)
-	'template_allow_change' => true, // allow users to choose their own template while browsing website?
+	'template' => 'tibiacom', // template used by website (kathrine, tibiacom)
+	'template_allow_change' => false, // allow users to choose their own template while browsing website?
 
 	'vocations_amount' => 4, // how much basic vocations your server got (without promotion)
 
 	// what client version are you using on this OT?
 	// used for the Downloads page and some templates aswell
-	'client' => 1098, // 954 = client 9.54
+	'client' => 1321, // 954 = client 9.54
 
 	'session_prefix' => 'myaac_', // must be unique for every site on your server
 	'friendly_urls' => false, // mod_rewrite is required for this, it makes links looks more elegant to eye, and also are SEO friendly (example: https://my-aac.org/guilds/Testing instead of https://my-aac.org/?subtopic=guilds&name=Testing). Remember to rename .htaccess.dist to .htaccess
@@ -51,11 +68,11 @@ $config = array(
 
 	// head options (html)
 	'meta_description' => 'Tibia is a free massive multiplayer online role playing game (MMORPG).', // description of the site
-	'meta_keywords' => 'free online game, free multiplayer game, ots, open tibia server', // keywords list separated by commas
+	'meta_keywords' => 'free online game, free multiplayer game, ots, open tibia server, OT server, Tibia OT, Meraki global, Meraki, Meraki ot, Rubinot, Rubini OT, Calmera, Calmera OT, Calmera Global, Aurera Global, otservlist', // keywords list separated by commas
 	'title_separator' => ' - ',
 
 	// footer
-	'footer' => ''/*'<br/>Your Server &copy; 2016. All rights reserved.'*/,
+	'footer' => '<br/>Meraki Global &copy; 2023. All rights reserved.'/*'<br/>Your Server &copy; 2016. All rights reserved.'*/,
 
 	'language' => 'en', // default language (currently only 'en' available)
 	'language_allow_change' => false,
@@ -65,7 +82,7 @@ $config = array(
 	'views_counter' => true,
 
 	// cache system. by default file cache is used
-	'cache_engine' => 'auto', // apc, apcu, eaccelerator, xcache, file, auto, or blank to disable.
+	'cache_engine' => 'disable', // apc, apcu, eaccelerator, xcache, file, auto, or blank to disable.
 	'cache_prefix' => 'myaac_', // have to be unique if running more MyAAC instances on the same server (except file system cache)
 
 	// database details (leave blank for auto detect from config.lua)
@@ -86,60 +103,55 @@ $config = array(
 	),
 
 	// images
-	'outfit_images_url' => 'https://outfit-images.ots.me/outfit.php', // set to animoutfit.php for animated outfit
-	'item_images_url' => 'https://item-images.ots.me/1092/', // set to images/items if you host your own items in images folder
-
+	'outfit_images_url' => './images/animated-outfits/animoutfit.php',
+	'item_images_url' => 'https://item-images-oracle.ots.me/1316_otservbr/',
+	
 	// account
 	'account_management' => true, // disable if you're using other method to manage users (fe. tfs account manager)
+	'account_login_by_email' => true, // use email instead of Account Name like in latest Tibia
+	'account_login_by_email_fallback' => true, // allow also additionally login by Account Name/Number (for users that might forget their email)
 	'account_create_auto_login' => false, // auto login after creating account?
 	'account_create_character_create' => true, // allow directly to create character on create account page?
-	'account_mail_verify' => false, // force users to confirm their email addresses when registering
-	'account_mail_confirmed_reward' => [ // reward users for confirming their E-Mails
-		// account_mail_verify needs to be enabled too
-		'premium_days' => 0,
-		'premium_points' => 0,
-		'coins' => 0,
-		'message' => 'You received %d %s for confirming your E-Mail address.' // example: You received 20 premium points for confirming your E-Mail address.
-	],
+	'account_mail_verify' => false, // force users to confirm their email addresses when registering account
 	'account_mail_unique' => true, // email addresses cannot be duplicated? (one account = one email)
-	'account_premium_days' => 0, // default premium days on new account
+	'account_premium_days' => 3, // default premium days on new account
 	'account_premium_points' => 0, // default premium points on new account
-	'account_welcome_mail' => true, // send welcome email when user registers
-	'account_mail_change' => 2, // how many days user need to change email to account - block hackers
+	'account_welcome_mail' => false, // send welcome email when user registers
+	'account_mail_change' => 7, // how many days user need to change email to account - block hackers
 	'account_country' => true, // user will be able to set country of origin when registering account, this information will be viewable in others places aswell
-	'account_country_recognize' => true, // should country of user be automatically recognized by his IP? This makes an external API call to http://ipinfo.io
-	'account_change_character_name' => false, // can user change their character name for premium points?
-	'account_change_character_name_points' => 30, // cost of name change
-	'account_change_character_sex' => false, // can user change their character sex for premium points?
-	'account_change_character_sex_points' => 30, // cost of sex change
+	'account_country_recognize' => false, // should country of user be automatically recognized by his IP? This makes an external API call to http://ipinfo.io
+	'account_change_character_name' => true, // can user change their character name for premium points?
+	'account_change_character_name_points' => 120, // cost of name change
+	'account_change_character_sex' => true, // can user change their character sex for premium points?
+	'account_change_character_sex_points' => 120, // cost of sex change
 	'characters_per_account' => 10,	// max. number of characters per account
 
 	// mail
-	'mail_enabled' => false, // is aac maker configured to send e-mails?
-	'mail_address' => 'no-reply@your-server.org', // server e-mail address (from:)
-	'mail_admin' => 'your-address@your-server.org', // admin email address, where mails from contact form will be sent
+	'mail_enabled' => true, // is aac maker configured to send e-mails?
+	'mail_address' => 'ot.merakiglobal@gmail.com', // server e-mail address (from:)
+	'mail_admin' => 'ot.merakiglobal@gmail.com', // admin email address, where mails from contact form will be sent
 	'mail_signature' => array( // signature that will be included at the end of every message sent using _mail function
-		'plain' => ""/*"--\nMy Server,\nhttp://www.myserver.com"*/,
-		'html' => ''/*'<br/>My Server,\n<a href="http://www.myserver.com">myserver.com</a>'*/
+		'plain' => "https://www.merakiglobal.com.br"/*"--\nMy Server,\nhttp://www.myserver.com"*/,
+		'html' => '<br/>Meraki Global,\n<a href="https://www.merakiglobal.com.br">Site</a>'/*'<br/>My Server,\n<a href="http://www.myserver.com">myserver.com</a>'*/
 	),
 	'smtp_enabled' => false, // send by smtp or mail function (set false if use mail function, set to true if you use GMail or Microsoft Outlook)
-	'smtp_host' => '', // mail host. smtp.gmail.com for GMail / smtp-mail.outlook.com for Microsoft Outlook
-	'smtp_port' => 25, // 25 (default) / 465 (ssl, GMail) / 587 (tls, Microsoft Outlook)
+	'smtp_host' => 'smtp.gmail.com', // mail host. smtp.gmail.com for GMail / smtp-mail.outlook.com for Microsoft Outlook
+	'smtp_port' => 465, // 25 (default) / 465 (ssl, GMail) / 587 (tls, Microsoft Outlook)
 	'smtp_auth' => true, // need authorization?
-	'smtp_user' => 'admin@example.org', // here your email username
-	'smtp_pass' => '',
-	'smtp_secure' => '', // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' (GMail) or 'tls' (Microsoft Outlook)
-	'smtp_debug' => false, // set true to debug (you will see more info in error.log)
+	'smtp_user' => 'ot.merakiglobal@gmail.com', // here your email username
+	'smtp_pass' => 'thje ttwx kxfg znlf',
+	'smtp_secure' => 'ssl', // What kind of encryption to use on the SMTP connection. Options: '', 'ssl' (GMail) or 'tls' (Microsoft Outlook)
+	'smtp_debug' => true, // set true to debug (you will see more info in error.log)
 
 	// reCAPTCHA (prevent spam bots)
 	'recaptcha_enabled' => false, // enable recaptcha verification code
 	'recaptcha_site_key' => '', // get your own site and secret keys at https://www.google.com/recaptcha
 	'recaptcha_secret_key' => '',
-	'recaptcha_theme' => 'light', // light, dark
+	'recaptcha_theme' => 'dark', // light, dark
 
 	//
 	'generate_new_reckey' => true,				// let player generate new recovery key, he will receive e-mail with new rec key (not display on page, hacker can't generate rec key)
-	'generate_new_reckey_price' => 20,			// price for new recovery key
+	'generate_new_reckey_price' => 200,			// price for new recovery key
 	'send_mail_when_change_password' => true,	// send e-mail with new password when change password to account
 	'send_mail_when_generate_reckey' => true,	// send e-mail with rec key (key is displayed on page anyway when generate)
 
@@ -148,17 +160,28 @@ $config = array(
 		0 => 'Female',
 		1 => 'Male'
 	),
+	
+	// vocations
+	'vocations' => array(
+		0 => 'None',
+		1 => 'Sorcerer',
+		2 => 'Druid',
+		3 => 'Paladin',
+		4 => 'Knight',
+		5 => 'Master Sorcerer',
+		6 => 'Elder Druid',
+		7 => 'Royal Paladin',
+		8 => 'Elite Knight',
+	),
 
 	// new character config
 	'character_samples' => array( // vocations, format: ID_of_vocation => 'Name of Character to copy'
-		//0 => 'Rook Sample',
-		1 => 'Sorcerer Sample',
-		2 => 'Druid Sample',
-		3 => 'Paladin Sample',
-		4 => 'Knight Sample'
+		0 => 'Rook Sample'
+		// 1 => 'Sorcerer Sample',
+		// 2 => 'Druid Sample',
+		// 3 => 'Paladin Sample',
+		// 4 => 'Knight Sample'
 	),
-
-	'use_character_sample_skills' => false,
 
 	// it must show limited number of players after using search in character page
 	'characters_search_limit' => 15,
@@ -170,31 +193,44 @@ $config = array(
 	// characters length
 	// This is the minimum and the maximum length that a player can create a character. It is highly recommend the maximum length to be 21.
 	'character_name_min_length' => 4,
-	'character_name_max_length' => 21,
+	'character_name_max_length' => 20,
 
 	// list of towns
 	// if you use TFS 1.3 with support for 'towns' table in database, then you can ignore this - it will be configured automatically (generated from your .OTBM map)
 	'towns' => array(
-		0 => 'No town',
-		1 => 'Sample town'
+		1 => 'No Town',
+		2 => 'Tutorial City',
+		5 => 'AbDendriel',
+		6 => 'Carlin',
+		8 => 'Thais',
+		9 => 'Venore',
+		10 => 'Ankrahmun',
+		11 => 'Edron',
+		12 => 'Farmine',
+		13 => 'Darashia',
+		14 => 'Liberty Bay',
+		15 => 'Port Hope',
+		16 => 'Svargrond',
+		17 => 'Yalahar',
+		20 => 'Rathleton'
 	),
 
 	// guilds
 	'guild_management' => true, // enable guild management system on the site?
-	'guild_need_level' => 1, // min. level to form a guild
-	'guild_need_premium' => true, // require premium account to form a guild?
-	'guild_image_size_kb' => 80, // maximum size of the guild logo image in KB (kilobytes)
+	'guild_need_level' => 100, // min. level to form a guild
+	'guild_need_premium' => false, // require premium account to form a guild?
+	'guild_image_size_kb' => 600, // maximum size of the guild logo image in KB (kilobytes)
 	'guild_description_chars_limit' => 1000, // limit of guild description
 	'guild_description_lines_limit' => 6, // limit of lines, if description has more lines it will be showed as long text, without 'enters'
 	'guild_motd_chars_limit' => 150, // limit of MOTD (message of the day) that is shown later in the game on the guild channel
 
 	// online page
 	'online_record' => true, // display players record?
-	'online_vocations' => false, // display vocation statistics?
-	'online_vocations_images' => false, // display vocation images?
-	'online_skulls' => false, // display skull images
+	'online_vocations' => true, // display vocation statistics?
+	'online_vocations_images' => true, // display vocation images?
+	'online_skulls' => true, // display skull images
 	'online_outfit' => true,
-	'online_afk' => false,
+	'online_afk' => true,
 
 	// support list page
 	'team_style' => 2, // 1/2 (1 - normal table, 2 - in boxes, grouped by group id)
@@ -210,7 +246,7 @@ $config = array(
 	// highscores page
 	'highscores_vocation_box' => true, // show 'Choose a vocation' box on the highscores (allowing peoples to sort highscores by vocation)?
 	'highscores_vocation' => true, // show player vocation under his nickname?
-	'highscores_frags' => false, // show 'Frags' tab (best fraggers on the server)? Only 0.3
+	'highscores_frags' => true, // show 'Frags' tab (best fraggers on the server)? Only 0.3
 	'highscores_balance' => false, // show 'Balance' tab (richest players on the server)
 	'highscores_outfit' => true, // show player outfit?
 	'highscores_country_box' => false, // doesnt work yet! (not implemented)
@@ -221,23 +257,28 @@ $config = array(
 	// characters page
 	'characters' => array( // what things to display on character view page (true/false in each option)
 		'level' => true,
-		'experience' => false,
-		'magic_level' => false,
-		'balance' => false,
+		'experience' => true,
+		'magic_level' => true,
+		'balance' => true,
 		'marriage_info' => true, // only 0.3
 		'outfit' => true,
 		'creation_date' => true,
-		'quests' => true,
+		'quests' => false,
 		'skills' => true,
 		'equipment' => true,
-		'frags' => false,
+		'frags' => true,
 		'deleted' => false, // should deleted characters from same account be still listed on the list of characters? When enabled it will show that character is "[DELETED]"
 	),
 	'quests' => array(
-		//'Some Quest' => 123,
-		//'Some Quest Two' => 456,
+		'Soul War' => 47223,
+		'Full Reflect' => 48903,
 	), // quests list (displayed in character view), name => storage
-	'signature_enabled' => true,
+	
+	'achievements_base' => 300000,
+	
+	'server_save' => '22:25:00',
+	
+	'signature_enabled' => false,
 	'signature_type' => 'tibian', // signature engine to use: tibian, mango, gesior
 	'signature_cache_time' => 5, // how long to store cached file (in minutes), default 5 minutes
 	'signature_browser_cache' => 60, // how long to cache by browser (in minutes), default 1 hour
@@ -246,10 +287,46 @@ $config = array(
 	'news_limit' => 5, // limit of news on the latest news page
 	'news_ticker_limit' => 5, // limit of news in tickers (mini news) (0 to disable)
 	'news_date_format' => 'j.n.Y', // check php manual date() function for more info about this
-	'news_author' => true, // show author of the news
-
+	'news_author' => false, // show author of the news
+	
+	// banner home
+	'banner_status' => true,
+	'banner_image' => 'banner.png', // templates->tibiacom->images->carousel
+	'banner_link' => '?subtopic=donate',
+	
+	// status bar
+	'status_bar' => true,
+	'client_link' => 'https://drive.google.com/file/d/1zvY1aBfa6KoOoM1gZx2LFKcSKRiv9xSm/view?usp=sharing', // link to download tibia client
+	'discord_link' => 'https://discord.gg/ZDRvQdNu', // link to join discord channel
+	'whatsapp_link' => 'https://chat.whatsapp.com/I6SJKXdLNn0HDz6SeEE2tR', // https://chat.whatsapp.com/I6SJKXdLNn0HDz6SeEE2tR
+	'instagram_link' => 'https://www.instagram.com/otmeraki/', // www.instagram.com/PROFILE
+	'facebook_link' => 'https://www.facebook.com/otmeraki/', // www.facebook.com/PAGE
+	'collapse_status' => true,
+	
+	// events
+	'events_xml' => 'data/xml/events.xml',
+	
+	// slide
+	'carousel_status' => true,
+	'carousel' => array(
+		'carousel_1' => 'runemaster_small.jpg',
+		'carousel_2' => 'merrygarb_small.jpg',
+		'carousel_3' => 'mothcape_small.jpg',
+	),
+	
+	// load page
+	'pace_load' => true, // load page top bar
+	'pace_theme' => 'flat-top', // big-counter, bounce, center-atom, center-circle, center-radar, center-simple, corner-indicator, fill-left, flash, flat-top, loading-bar, max-osx, material, minimal
+	'pace_color' => 'white', // black, blue, green, orange, pink, purple, red, silver, white, yellow
+	
+	// char bazaar
+	'bazaar_create' => 10, // price to create auction
+	'bazaar_tax' => 30, // tax to bid
+	'bazaar_bid' => 30, // price to bid
+	'bazaar_accountid' => 1, // account id to move auction character
+	
 	// gifts/shop system
-	'gifts_system' => false,
+	'gifts_system' => true,
 
 	// support/system
 	'bug_report' => true, // this configurable has no effect, its always enabled
@@ -267,9 +344,8 @@ $config = array(
 	'last_kills_limit' => 50, // max. number of deaths shown on the last kills page
 
 	// status, took automatically from config file if empty
-	'status_enabled' => true, // you can disable status checking by settings this to "false"
-	'status_ip' => '',
-	'status_port' => '',
+	'status_ip' => '127.0.0.1',
+	'status_port' => '7173',
 	'status_timeout' => 2, // how long to wait for the initial response from the server (default: 2 seconds)
 
 	// how often to connect to server and update status (default: every minute)
@@ -281,21 +357,13 @@ $config = array(
 	'admin_panel_modules' => 'lastlogin,points,coins',
 
 	// other
-	'anonymous_usage_statistics' => true,
+	'anonymous_usage_statistics' => false,
 	'email_lai_sec_interval' => 60, // time in seconds between e-mails to one account from lost account interface, block spam
 	'google_analytics_id' => '', // e.g.: UA-XXXXXXX-X
-	'experiencetable_columns' => 3, // how many columns to display in experience table page. * experiencetable_rows, 5 = 500 (will show up to 500 level)
-	'experiencetable_rows' => 200, // till how many levels in one column
+	'experiencetable_columns' => 4, // how many columns to display in experience table page. * experiencetable_rows, 5 = 500 (will show up to 500 level)
+	'experiencetable_rows' => 500, // till how many levels in one column
 	'date_timezone' => 'Europe/Berlin', // more info at http://php.net/manual/en/timezones.php
 	'footer_show_load_time' => true, // display load time of the page in the footer
 
-	'npc' => array(),
-	
-	// character name blocked
-	'character_name_blocked' => array(
-		'prefix' => array(),
-		'names' => array(),
-		'words' => array(),
-	),
-	
+	'npc' => array()
 );

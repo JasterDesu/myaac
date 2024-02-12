@@ -1,0 +1,160 @@
+.CUSTOM_SHADOW {
+  box-shadow: 5px 5px 10px #000000;
+}
+.OFFER_INFO {
+  text-align: left;
+  margin: 10;
+}
+
+.COINS_COUNT {
+  text-align: center;
+}
+
+.SLOT_ITEM {
+  background: url(/images/items/empty.gif);
+}
+
+.TOP_BUTTONS_MENU {
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 5px;
+  padding: 3px 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.TOP_BUTTONS_MENU>b {
+  color: white;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 3px 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.INSIDE_INFO_SHADOW {
+  box-shadow: 2px 2px 10px #000000;
+}
+.OTHER_INFO {
+  border:1px solid #352F26;
+  height: 85px;
+}
+.OTHER_INFO_BOTTOM {
+  border:1px solid #352F26;
+  height: 162px;
+}
+.SHOP_TABLE_LIST {
+  border-collapse: collapse; 
+  width: 100%;  
+  background-color: #D0C2AB; 
+}
+.SHOP_TABLE_LIST>tbody>.yes {
+  background-color: #f1e0c6;
+}
+.SHOP_TABLE_LIST>tbody>.no {
+  background-color: #d5c0a1;
+}
+.SHOP_TABLE_LIST>tbody>tr>td {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.ERROR_MSG {
+  text-align: center;
+  border:1px solid red;
+  height: 27px;
+  width: 100%;
+  background: rgba(255, 0, 0, 0.5);
+}
+.NO_OFFERS {
+  text-align: center;
+  height: 27px;
+  width: 100%;
+}
+
+.ACTION_TITTLE_BOX {
+  width: 100%;
+  box-shadow: 5px 5px 10px #000000;
+  border: 1px solid black;
+  background-color: #d4c0a1;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ACTION_TITTLE_BOX>b {
+  color: black;
+  font-family: "Teko", sans-serif;
+  font-size: 29px;
+}
+
+.ERROR_MSG>b {
+  margin: 10px;
+  color: black;
+}
+
+.CHECK_LIST_INSIDE {
+  width: 100%; 
+  text-align: left;
+}
+.CHECK_LIST_INFO {
+  border:1px solid #352F26;
+  /* height: 300px; */
+}
+
+.OFFER_GHOST {
+  opacity: 0.3;
+}
+
+.BAZAAR_INFO_BOX {
+  border:1px solid #5a2800;
+  background-color: #d5c0a1;
+  width: 100%;
+  min-height: 200px;
+}
+
+.BAZAAR_INFO_BOX>b {
+  color: #5a2800;
+}
+
+.BAZAAR_INFO_BOX>p {
+  color: #5a2800;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.BAZAAR_INFO_BOX>.TITTLE {
+  color: #5a2800;
+  text-align: center;
+  padding: 5px 5px;
+}
+
+@keyframes fade {
+  0% { opacity: 0; }  
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.loop-text {
+  position: relative;
+  height: 40px;
+  overflow: hidden;
+  
+  a {
+    position: absolute;
+    height: 30px;
+    opacity: 0;
+    transition: 1.75s ease-out;
+    
+    &.show {
+      opacity: 1;
+    }
+    
+  }
+}

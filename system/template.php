@@ -80,7 +80,6 @@ else {
 		}
 
 		$template_ini = parse_ini_file($file);
-		unset($file);
 
 		if ($cache->enabled()) {
 			$cache->set('template_ini_' . $template_name, serialize($template_ini));

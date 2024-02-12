@@ -1,3 +1,7 @@
+Please select the game world of your choice to see the list of all existing guilds on it. Click on any view button to get more information about a guild. See the manual for a detailed description about guilds and their benefits.
+<br>
+<br>
+<br>
 <div class="TableContainer">
     <div class="CaptionContainer">
         <div class="CaptionInnerContainer">
@@ -22,10 +26,8 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div class="TableShadowContainerRightTop">
-                                            <div class="TableShadowRightTop" style="background-image:url({{ template_path }}/images/content/table-shadow-rt.gif);"></div>
-                                        </div>
-                                        <div class="TableContentAndRightShadow" style="background-image:url({{ template_path }}/images/content/table-shadow-rm.gif);">
+                                        
+                                        <div class="TableContentAndRightShadow">
                                             <div class="TableContentContainer">
                                                 <table class="TableContent" width="100%">
                                                     <tbody>
@@ -46,7 +48,7 @@
 
                                                                 <td>
                                                                     <span{% if guild.description is not empty %} valign="top"{% endif %}>
-                                                                        <b>{{ guild.name }}</b>{% if isAdmin %}<a href="?subtopic=guilds&action=delete_by_admin&guild={{ guild.name }}"> - Delete this guild (for ADMIN only!)</a>{% endif %}
+                                                                        <b>{{ guild.name }}</b>{% if isAdmin %}<a href="?subtopic=guilds&action=delete_by_admin&guild={{ guild.name }}"> [DELETE]</a>{% endif %}
                                                                     </span>
 
                                                                     {% if guild.description is not empty %}
@@ -97,12 +99,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="TableShadowContainer">
-                                            <div class="TableBottomShadow" style="background-image:url(https://static.tibia.com/images/global/content/table-shadow-bm.gif);">
-                                                <div class="TableBottomLeftShadow" style="background-image:url({{ template_path }}/images/content/table-shadow-bl.gif);"></div>
-                                                <div class="TableBottomRightShadow" style="background-image:url({{ template_path }}/images/content/table-shadow-br.gif);"></div>
-                                            </div>
-                                        </div>
+                                        
                                     </td>
                                 </tr>
                             </tbody>

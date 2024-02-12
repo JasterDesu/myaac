@@ -1,0 +1,25 @@
+<b><span style="color:red;">OBS: Em compras com cartão de crédito, você deve preencher todos os dados corretamente.</br> PAGSEGURO tem sistema Anti Fraude que poderá cancelar sua doação, ou ficar em análise por algum tempo.
+</span></b>
+<form target="pagseguro" method="post" action="?subtopic=points&system=pagseguro&redirect">
+	<table border="0" cellpadding="4" cellspacing="1" width="100%">
+		<tbody>
+		<tr bgcolor="{{ config.vdarkborder }}" class="white">
+			<th colspan="2"><strong>Escolha a quantidade de pontos referente a sua doação.</strong></th>
+		</tr>
+		<tr bgcolor="{{ config.darkborder }}">
+			<td width="30%">Conta:</td>
+			<td><strong>{% if constant('USE_ACCOUNT_NAME') %}{{ account_logged.getName() }}{% else %}{{ account_logged.getId() }}{% endif %}</strong></td>
+		</tr>
+		<tr bgcolor="{{ config.darkborder }}">
+			<td width="30%">Quantos pontos você deseja</td>
+			<td><input name="itemCount" type="number" min="10" size="5" maxlength="5" required/></td>
+		</tr>
+		<tr bgcolor="{{ config.darkborder }}">
+			<td colspan="2">
+				<input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/carrinhoproprio/btnFinalizar.jpg" name="submit" {% if is_localhost %}disabled{% endif %}/>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</form>
+<b><span style="color:#ff0000;">OBS:</span></b> Points are delivered <b>automatically</b> after the <u>approved</u> of your payment by PagSeguro.

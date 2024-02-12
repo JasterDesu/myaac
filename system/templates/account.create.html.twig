@@ -29,16 +29,21 @@
 												<tbody>
 
 												{{ hook('HOOK_ACCOUNT_CREATE_BEFORE_ACCOUNT') }}
-
+												
+												{% if config.account_login_by_email %}
 												<tr>
 													<td class="LabelV" style="width: 150px">
 														<span{% if errors.account is defined %} class="red"{% endif %}>Account {% if constant('USE_ACCOUNT_NAME') %}Name{% else %}Number{% endif %}:</span>
 													</td>
 													<td>
-														<input type="text" name="account" id="account_input" size="30" maxlength="{% if constant('USE_ACCOUNT_NAME') %}30{% else %}10{% endif %}" value="{{ account }}" autofocus/>
+														<input type="text" name="account" id="account_input" size="30" maxlength="{% if constant('USE_ACCOUNT_NAME') %}30{% else %}10{% endif %}" />
 														<img id="account_indicator" src="images/global/general/{% if not save or errors.account is defined %}n{% endif %}ok.gif" style="display: none;" />
+														{% if constant('USE_ACCOUNT_NAME') %}
+															<div id="SuggestAccountNumber">[<a href="#">suggest number</a>]</div>
+														{% endif %}
 													</td>
 												</tr>
+												{% endif %}
 												<tr><td></td><td><span id="account_error" class="FormFieldError">{% if errors.account is defined %}{{ errors.account }}{% endif %}</span></td></tr>
 												{{ hook('HOOK_ACCOUNT_CREATE_AFTER_ACCOUNT') }}
 												<tr>
@@ -149,8 +154,7 @@
 													</td>
 													<td>
 														<input id="character_name" name="name" size="{{ config.character_name_max_length }}" maxlength="{{ config.character_name_max_length }}" value="{{ name }}"/>
-														<img id="character_indicator" src="images/global/general/{% if not save or errors.name is defined %}n{% endif %}ok.gif" style="display: none;" />
-														<br>
+														<img id="character_indicator" src="images/global/general/{% if not save or errors.name is defined %}n{% endif %}ok.gif" style="display: none;" />														<br>
 													</td>
 												</tr>
 												<tr>
@@ -232,7 +236,7 @@
                                                 {% if config.character_towns|length > 1 %}
 												<tr>
 													<td class="LabelV" style="width: 150px">
-														<span{% if errors.town is defined %} class="red"{% endif %}>Select your city:</span>
+														<span{% if errors.town is defined %} class="red"{% endif %}>Select your town:</span>
 													</td>
 													<td>
 														<table width="100%" >
@@ -286,7 +290,7 @@
 												</tr>
 												<tr>
 													<td colspan="2" >
-														<span><input type="checkbox" id="accept_rules" name="accept_rules" value="true"{% if accept_rules %}checked{% endif %}/> <label for="accept_rules">I agree to the <a href="?subtopic=rules" target="_blank">{{ config.lua.serverName }} Rules</a>.</label></span>
+														<span><input type="checkbox" id="accept_rules" name="accept_rules" value="true"{% if accept_rules %}checked{% endif %}/> <label for="accept_rules">I agree to the <a href="?subtopic=rules" target="_blank">{{ config.lua.serverName }} Rules</a>. <STRONG>LEIA AS REGRAS ANTES DE JOGAR!</STRONG></label></span>
 													</td>
 												</tr>
                                                 {% if errors.accept_rules is defined %}
@@ -334,3 +338,11 @@
 </form>
 {{ hook('HOOK_ACCOUNT_CREATE_AFTER_FORM') }}
 <script type="text/javascript" src="tools/check_name.js"></script>
+<style>
+	#SuggestAccountNumber {
+		font-size: 7pt;
+	}
+	#SuggestCharacterName {
+		font-size: 7pt;
+	}
+</style>

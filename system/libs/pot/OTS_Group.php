@@ -538,7 +538,6 @@ class OTS_Group extends OTS_Row_DAO implements IteratorAggregate, Countable
  * @throws PDOException On PDO operation error.
  * @return Iterator List of players.
  */
-	#[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->getPlayersList();
@@ -553,7 +552,7 @@ class OTS_Group extends OTS_Row_DAO implements IteratorAggregate, Countable
  * @throws PDOException On PDO operation error.
  * @return int Count of players.
  */
-    public function count(): int
+    public function count()
     {
         return $this->getPlayersList()->count();
     }
@@ -671,3 +670,5 @@ class OTS_Group extends OTS_Row_DAO implements IteratorAggregate, Countable
 }
 
 /**#@-*/
+
+?>

@@ -1,7 +1,15 @@
 body {
-  margin: 0px;
-  padding:  0px;
-  background-color: #051122;
+	
+	background-image:url(/templates/tibiacom/images/header/back3.png);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: top center;
+	width: 100%;
+	height: 100%;
+	min-width: 1000px;
+	margin: 0px;
+	padding:  0px;
+	background-color: #051122;
 }
 
 img {
@@ -18,11 +26,67 @@ img {
   min-width: 1000px;
 }
 
+/* helper div */
+.HelperDivIndicator {
+  position: relative;
+  cursor: help;
+}
+.OptionContainer {
+    text-align: center;
+}
+
+#HelperDivContainer {
+  display: none;
+  position: absolute;
+  width: 225px;
+  z-index: 1000;
+  color: #5A2800;
+  font-family: Verdana, Arial, Times New Roman, sans-serif;
+  font-size: 9pt;
+  text-align: left;
+  padding: 10px;
+  border: 1px double #5A2800;
+  margin-left: 8px;
+}
+
+#HelperDivContainer .HelperDivArrow {
+  position: absolute;
+  top: -1px;
+  left: -8px;
+  width: 8px;
+  height: 13px;
+}
+
+#HelperDivContainer #HelperDivHeadline {
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+#HelperDivContainer #HelperDivHeadline {
+  position: relative;
+  white-space: normal;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+#HelperDivContainer .Ornament {
+  width: 220px;
+}
+
+#HelperDivContainer #HelperDivText {
+  text-align: center;
+}
+
+#HelperDivContainer #HelperDivText ul {
+  padding-left: 20px;
+}
+
 /* container to implement min/max width */
 #Bodycontainer {
   text-align: left;
   min-width: 1000px;
-  max-width: 1200px;
+  max-width: 1280px;
   width: 100%;
   height: 100%;
   margin: 0px;
@@ -32,10 +96,20 @@ img {
   display: table;
   width: expression(document.body.clientWidth > 1200? "1200px": "100%" );
 }
+#LoginCreateAccountBox p {
+    margin: 0;
+    padding: 0;
+    font-size: 12pt;
+}
+#LoginFormButtonCell {
+    width: 145px;
+    vertical-align: top;
+    padding-right: 0;
+}
 
 #ContentRow {
   position: relative;
-  top: 155px;
+  top: 200px;
 }
 
 /* "star-HTML-hack" to correct the position of the content row */
@@ -103,25 +177,25 @@ img {
  *  -------------------------------
  */
 
-#LeftArtwork {
-  position: absolute;
-  height: 140px;
-  width: 166px;
-  top: -140px;
-  left: 4px;
-  background-repeat: no-repeat;
-  z-index:5;
+#LeftArtwork{
+    position:absolute;
+    height:140px;
+    width:166px;
+    top:-140px;
+    left:4px;
+    background-repeat:no-repeat;
+    z-index:5
 }
 
-#LeftArtwork #TibiaLogoArtworkTop {
-  position: absolute;
-  top: 20px;
-  left: 0px;
-  height: 82px;
-  width: 166px;
-  z-index: 5;
-  cursor: pointer;
-  border: 0px;
+#LeftArtwork #TibiaLogoArtworkTop{
+    position:absolute;
+    top:150px;
+    left:-17px;
+    height:158px;
+    width:203px;
+    z-index:5;
+    cursor:pointer;
+    border:0
 }
 
 #LeftArtwork #TibiaLogoArtworkBottom {
@@ -151,6 +225,70 @@ img {
   z-index:10;
 }
 
+.SmallMenuBox#DownloadBox {
+    top: 4px;
+}
+.SmallMenuBox {
+    position: relative;
+    left: 5px;
+    top: 8px;
+    width: 100%;
+    margin-bottom: 38px;
+    background-repeat: no-repeat;
+}
+.SmallMenuBox#DownloadBox {
+    top: 4px;
+}
+.SmallMenuBox .SmallBoxTop {
+    position: absolute;
+    left: -5px;
+    top: -12px;
+    height: 12px;
+    width: 180px;
+    background-repeat: no-repeat;
+}
+.SmallMenuBox#DownloadBox .SmallBoxBorder {
+    height: 39px;
+}
+.SmallMenuBox .SmallBoxBorder {
+    position: absolute;
+    top: 0;
+    height: 52px;
+    width: 8px;
+    background-repeat: repeat-y;
+    z-index: 10;
+}
+.SmallMenuBox .SmallBoxButtonContainer {
+    position: relative;
+	height: 39px;
+    width: 160px;
+    left: 5px;
+    background-repeat: repeat-y;
+    z-index: 1;
+}
+#PlayNowContainer {
+    position: absolute;
+    width: 150px;
+    height: 37px;
+    top: 1px;
+    left: 5px;
+    z-index: 99;
+}
+.SmallMenuBox .BorderRight {
+    right: 9px;
+}
+.SmallMenuBox#DownloadBox .SmallBoxBottom {
+    top: 39px;
+}
+.SmallMenuBox .SmallBoxBottom {
+    position: absolute;
+    top: 52px;
+    left: -5px;
+    height: 12px;
+    width: 180px;
+    background-repeat: no-repeat;
+}
+
 #LeftArtwork #LogoLink {
   position: absolute;
   bottom: 14px;
@@ -171,21 +309,55 @@ img {
   z-index: 90;
 }
 
+#RightArtwork #PedestalRight {
+	position: absolute;
+	top: -78px;
+	right: -16px;
+}
+
+#RightArtwork #BoostedMonster {
+	position: absolute;
+	height: 64px;
+	width: 64px;
+	top: -90px;
+	left: -11px;
+	z-index: 15;
+	cursor: pointer;
+}
+
+#RightArtwork #BoostedBoss {
+	position: absolute;
+	height: 64px;
+	width: 64px;
+	top: -90px;
+	right: 20px;
+	z-index: 15;
+	cursor: pointer;
+}
+
 #RightArtwork #Monster {
   position: absolute;
-  height: 80px;
-  width: 80px;
-  top: -137px;
-  left: 8px;
+  height: 64px;
+  width: 64px;
+  top: -132px;
+  left: 24px;
   z-index: 15;
   cursor: pointer;
 }
 
 #PedestalAndOnline {
   position: absolute;
-  top: -105px;
-  width: 132px;
-  height: 111px;
+  left: 20px;
+  top: -121px;
+  width: 104px;
+  height: 85px;
+}
+#Pedestal {
+    position: absolute;
+    left: 20px;
+    top: -121px;
+    width: 104px;
+    height: 85px;
 }
 
 #RightArtwork #PlayersOnline {
@@ -213,7 +385,7 @@ img {
   left: 5px;
   top: 8px;
   width: 100%;
-  margin-bottom: 42px;
+  margin-bottom: 38px;
   background-repeat: no-repeat;
 }
 
@@ -280,25 +452,25 @@ img {
 
 #LoginBox #LoginButtonContainer {
   margin-left: 5px;
-  height: 26px;
+  height: 39px;
   width: 160px;
   background-repeat: repeat-y;
 }
 
 #Loginbox #LoginButton {
   position: relative;
-  top: 1px;
-  left: 12px;
-  height: 25px;
-  width: 135px;
+  top: 0px;
+  left: 5px;
+  height: 37px;
+  width: 150px;
 }
 
 #Loginbox #LoginButton .Button {
   position: relative;
   top: 0px;
   left: 0px;
-  width: 135px;
-  height: 25px;
+  width: 150px;
+  height: 37px;
   visibility: hidden;
 }
 
@@ -306,8 +478,8 @@ img {
   position: absolute;
   top: 0px;
   left: 0px;
-  height: 22px;
-  width: 135px;
+  height: 37px;
+  width: 150px;
   z-index: 15;
   cursor: pointer;
 }
@@ -355,7 +527,7 @@ img {
 .Button {
   position: relative;
   height: 32px;
-  width: 170px;
+  /*width: 150px;*/
   visibility: hidden;
   display: block;
 }
@@ -420,7 +592,7 @@ img {
 .LeftChain {
   position: absolute;
   top: 0px;
-  left: -5px;
+  left: 0px;
   height: 33px;
   width: 7px;
   background-repeat: repeat-y;
@@ -429,7 +601,7 @@ img {
 .RightChain {
   position: absolute;
   top: 0px;
-  right: -4px;
+  right: 0px;
   height: 33px;
   width: 7px;
   background-repeat: repeat-y;
@@ -437,10 +609,10 @@ img {
 
 .Submenu {
   position: relative;
-  margin-left: 5px;
+  margin-left: 0px;
   margin-right: 5px;
   background-color: #0D2E2B;
-  width: 160px;
+  width: 170px;
 }
 
 .Submenuitem {
@@ -452,7 +624,7 @@ img {
 .ActiveSubmenuItemIcon {
   position: absolute;
   top: 5px;
-  left: 3px;
+  left: 8px;
   width: 10px;
   height: 10px;
   background-repeat: no-repeat;
@@ -464,7 +636,7 @@ img {
   border-top: 0;
   padding-top: 2px;
   padding-bottom: 2px;
-  padding-left: 15px;
+  padding-left: 22px;
   border-bottom: 1px solid #4b7874;
   overflow: hidden;
 }
@@ -509,6 +681,25 @@ img {
 #ContentHelper {
   position: relative;
 }
+
+
+.InfoBar{position:relative;height:28px;top:6px;margin-left:5px;margin-right:5px;font-size:10px;color:#fff;font-family:Verdana,Arial,Times New Roman,sans-serif}.InfoBar a{border:0}.InfoBarBlock{margin-right:15px;border:0}.InfoBarBigLogo{margin-bottom:0;border:0}.InfoBarSmallElement{margin-left:5px;border:0}.InfoBarNumbers{top:-4px;position:relative}.InfoBar a{font-family:Verdana,Arial,Times New Roman,sans-serif;font-size:7pt;font-weight:400;color:#fff}.InfoBar a:link{color:#fff;font-weight:400;text-decoration:none}.InfoBar a:visited{color:#fff;font-weight:400;text-decoration:none}.InfoBar a:focus{color:#fff;font-weight:400;text-decoration:none}.InfoBar a:active{color:#fff;font-weight:400;text-decoration:underline}
+.InfoBar a:hover {
+	color:#fff !important;
+	font-weight:400 !important;
+	text-decoration: underline!important;
+}
+.InfoBarLinks {
+	text-decoration: none;
+	font-size: 10px;
+}
+.InfoBarLinks a:hover {
+	text-decoration: none;
+	font-size: 10px;
+}
+
+
+
 
 /* "star-HTML-hack" to to implement min-width in IE */
 * html #ContentHelper {
@@ -633,6 +824,15 @@ img {
   z-index: 50;
 }
 
+.SecretAchievementIcon {
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	margin-left: 12px;
+	margin-top: -2px;
+	right: 5px
+}
+
 /* Borders */
 
 .Content .Border_1 {
@@ -706,9 +906,57 @@ img {
 #Themeboxes #NewcomerBox .ThemeboxButton {
   bottom: 15px;
 }
-#Themeboxes #PremiumBox {
-  height: 164px;
+
+#PremiumBox {
+    position: relative;
+    height: 204px
 }
+#PremiumBoxDecor {
+    margin: 0;
+    position: absolute;
+    top: -28px;
+    left: 5px;
+    width: 64px;
+    height: 64px
+}
+#PremiumBoxBg {
+    margin: 0;
+    position: absolute;
+    top: 34px;
+    left: 10px;
+    width: 160px;
+    height: 126px
+}
+#PremiumBoxOverlay {
+    margin: 0;
+    position: absolute;
+    top: 34px;
+    left: 10px;
+    width: 163px;
+    height: 26px
+}
+#PremiumBoxOverlayText {
+    color: #fff;
+    font-family: Verdana, sans-serif;
+    margin-top: 3px;
+    text-align: center;
+    font-size: 11px
+}
+#PremiumBoxButtonDecor {
+    position: absolute;
+    width: 114px;
+    height: 26px;
+    left: 33px;
+    bottom: 34px;
+    z-index: 25
+}
+#PremiumBoxButton {
+    position: absolute;
+    bottom: 9px;
+    left: 18px;
+    text-align: center
+}
+
 #Themeboxes #JobBox {
   height: 164px;
 }
@@ -1157,6 +1405,13 @@ img {
 .TableContainer .Even {
   background-color: #d5c0a1;
 }
+.Text {
+	margin-top: 3px;
+	margin-left: 4px;
+	margin-bottom: 2px;
+	padding: 3px;
+	padding-top: 3px;
+}
 
 /* TABLEHEADER DECORATION */
 .TableContainer .CaptionContainer {
@@ -1387,6 +1642,7 @@ img {
   background-position: top right;
   margin-right: 3px;
   font-size: 1px;
+  /*box-shadow: 3px 3px 2px #875f3e;*/
 }
 .TableShadowContainer {
   position: relative;
@@ -1431,6 +1687,77 @@ img {
   margin-left: 15px;
 }
 /* LABELS */
+.InnerTableContainer .TableContentContainer {
+    box-shadow: 3px 3px 2px #875f3e;
+}
+.TableContentContainer {
+    border: 1px solid #5f4d41;
+    position: relative;
+    margin-right: 7px;
+    margin-bottom: 5px;
+    height: 100%;
+    background-color: #d4c0a1;
+    padding: 0;
+}
+.TableContainer .Table3 .TableContent td {
+    border: 1px solid #faf0d7;
+}
+
+
+.TableContainer .GreedyCell {
+    width: 80%;
+}
+.LabelV80{
+	font-weight:700;
+	padding-right:10px;
+	white-space:nowrap;
+	vertical-align:top;
+	width:80px;
+}
+.LabelV100{
+	font-weight:700;
+	padding-right:10px;
+	white-space:nowrap;
+	vertical-align:top;
+	width:100px;
+}
+.LabelV120{
+	font-weight:700;
+	padding-right:10px;
+	white-space:nowrap;
+	vertical-align:top;
+	width:120px;
+}
+.LabelV150{
+	font-weight:700;
+	padding-right:10px;
+	white-space:nowrap;
+	vertical-align:top;
+	width:150px;
+}
+.LabelV175{
+	font-weight:700;
+	padding-right:10px;
+	white-space:nowrap;
+	vertical-align:top;
+	width:175px;
+}
+.LabelV200{
+	font-weight:700;
+	padding-right:10px;
+	white-space:nowrap;
+	vertical-align:top;
+	width:200px;
+}
+.LabelV250{
+	font-weight:700;
+	padding-right:10px;
+	white-space:nowrap;
+	vertical-align:top;
+	width:250px;
+}
+
+
 .LabelV {
   font-weight: bold;
   padding-right: 10px;
@@ -1487,23 +1814,27 @@ img {
   z-index: 20;
 }
 .BigButtonText {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 135px;
-	height: 25px;
-	margin: 0;
-	padding: 0;
-	cursor: pointer;
-	background: 0 0;
-	border: none;
-	text-align: center;
-	color: #ffd18c;
-	font-family: Verdana,Arial,Times New Roman,sans-serif;
-	font-size: 12px;
-	font-weight: 400;
-	z-index: 20;
-	text-shadow: -1px -1px 0 #000,0 -1px 0 #000,1px -1px 0 #000,1px 0 0 #000,1px 1px 0 #000,0 1px 0 #000,-1px 1px 0 #000,-1px 0 0 #000
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 135px;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: none;
+    text-align: center;
+    color: #ffd18c;
+    font-family: Verdana,Arial,Times New Roman,sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    z-index: 20;
+    text-shadow: -1px -1px 0 #000, 0 -1px 0 #000, 1px -1px 0 #000, 1px 0 0 #000, 1px 1px 0 #000, 0 1px 0 #000, -1px 1px 0 #000, -1px 0 0 #000;
+}
+.BigButtonText:hover{
+	top:1px;
+	left:1px;
 }
 .TopButtonContainer {
   position: relative;

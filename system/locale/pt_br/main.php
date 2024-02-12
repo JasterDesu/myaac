@@ -5,8 +5,8 @@
  *
  * @author Ivens Pontes <ivenscardoso@hotmail.com>
  */
-$locale['name']     = 'Brazilian Portuguese';
-$locale['lang']		= 'pt-br';
+$locale['name']     = 'Português Brasil';
+$locale['lang']		= 'pt_br';
 $locale['encoding'] = 'utf-8';
 $locale['direction']= 'ltr';
 

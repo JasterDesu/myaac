@@ -7,35 +7,20 @@
 	<div class="Border_2">
 		<div class="Border_3">
 			<div class="BoxContent" style="background-image:url({{ template_path }}/images/content/scroll.gif);">
-				<div id="TeaserThumbnail">
-					{% if article.read_more is not empty %}<a href="{{ article.read_more }}">{% endif %}
-						<img src="{{ article.image }}" width="150" height="100" border=0 alt="" />
-					{% if article.read_more is not empty %}</a>{% endif %}
-				</div>
-				{% if article.read_more is not empty %}
-					<a id="Link" href="{{ article.read_more }}">&raquo; read more</a>
-				{% endif %}
-				<div id="TeaserText">
-					<div style="position: relative; top: -2px; margin-bottom: 2px;">
-						<b>
-							<p>{{ article.title|raw }}
-								{% if canEdit %}
-									<a href="/admin/?p=news&action=edit&id={{ article.id }}" title="Edit">
-										<img src="images/edit.png"/>Edit
-									</a>
-									<a id="delete" href="/admin/?p=news&action=delete&id={{ article.id }}" onclick="return confirm('Are you sure?');" title="Delete">
-										<img src="images/del.png"/>Delete
-									</a>
-									<a href="/admin/?p=news&action=hide&id={{ article.id }}" title="{% if article.hidden != 1 %}Hide{% else %}Show{% endif %}">
-										<img src="images/{% if article.hidden != 1 %}success{% else %}error{% endif %}.png"/>
-										{% if article.hidden != 1 %}Hide{% else %}Show{% endif %}
-									</a>
-								{% endif %}
-							</p>
-						</b>
-					</div>
-					{{ article.text|raw }}
-				</div>
+				<a href="?account/create">
+					<img style="margin-top: -75px; margin-left: 728px; position: absolute; overflow: visible; display: block;" src="{{ template_path }}/images/play.png"/>
+				</a>
+          <p><b>➤ Meraki Global Open PvP ✦ Client: 13.21 ✦ Brazil Host Low Ping</b></p>
+          
+          <p>
+            O Meraki Global é um servidor brasileiro e 13.21 Open-pvp com mapa Global atualizado.
+          </p>
+          <p>
+            <b>Create Account:<a href="?account/create"> Here</a></b>
+            <b>Clients:<a href="?subtopic=downloadclient"> Download</a></b>
+            <b>Get Coins:<a href="?donate"> Donate</a></b>
+          </p>
+          
 			</div>
 		</div>
 	</div>

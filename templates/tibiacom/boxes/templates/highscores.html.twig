@@ -13,7 +13,6 @@
 		font-weight: bold;
 		text-align: right;
 		text-decoration: inherit;
-		text-shadow: 0.1em 0.1em #333
 	}
 
 	#Topbar a {
@@ -36,7 +35,7 @@
 	a:hover.topfont {
 		font-family: Verdana, Arial, Helvetica, sans-serif;
 		font-size: 11px;
-		color: #CCC;
+		color: #5f4d41;
 		text-decoration:none
 	}
 </style>
@@ -44,14 +43,14 @@
 <div id="Topbar" class="Themebox" style="background-image:url({{ template_path }}/images/themeboxes/highscores/highscores.png);">
 	<div class="top_level" style="background:url({{ template_path }}/images/themeboxes/bg_top.png)" align="	">
     {% for player in topPlayers %}
-	    <div style="text-align:left"><a href="{{ getPlayerLink(player['name'], false) }} " class="topfont {% if player['online'] %}online{% else %}offline{% endif %}">
+	    <div style="text-align:left;"><a href="{{ getPlayerLink(player['name'], false) }} " class="topfont {% if player['online'] %}online{% else %}offline{% endif %}">
 			{% if config.online_outfit %}
 				<img style="position:absolute;margin-top:{% if player.looktype in [75, 266, 302] %}-20px;margin-left:-0px;{% else %}-45px;margin-left:-25px;{%  endif %}" src="{{ player.outfit }}" alt="player outfit"/>
 			{% endif %}
-				<span style="color: #CCC; margin-left: 40px">{{ player['rank'] }} - </span>
-				{{ player['name'] }}
+				<span style="margin-left: 48px">{{ player['name'] }}</span>
+				
 			<br>
-			<small><span style="color: white; margin-left: 50px">Level: ({{ player['level'] }})</span></small>
+			<small><span style="color: #5f4d41; margin-left: 50px">Level: ({{ player['level'] }})</span></small>
 			<br>
 		</a>
 	</div>

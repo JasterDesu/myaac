@@ -9,6 +9,7 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
+// die(header('Location: ' . BASE_URL));
 $title = 'Lost Account Interface';
 
 if(!$config['mail_enabled'])
@@ -93,7 +94,7 @@ elseif($action == 'sendcode')
 					$newcode = generateRandomString(30, true, false, true);
 					$mailBody = '
 					You asked to reset your ' . $config['lua']['serverName'] . ' password.<br/>
-					<p>Account name: '.$account->getName().'</p>
+					<p>Account Email: '.$account->getEmail().'</p>
 					<br />
 					To do so, please click this link:
 					<p><a href="' . BASE_URL . '?subtopic=lostaccount&action=checkcode&code='.$newcode.'&character='.urlencode($nick).'">'.BASE_URL.'/?subtopic=lostaccount&action=checkcode&code='.$newcode.'&character='.urlencode($nick).'</a></p>
@@ -547,3 +548,4 @@ elseif($action == 'setnewpassword')
 				' . $twig->render('buttons.submit.html.twig') . '</div>
 				</TD></TR></FORM></TABLE></TABLE>';
 }
+?>

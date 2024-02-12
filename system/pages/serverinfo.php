@@ -1,110 +1,139 @@
 <?php
-/**
- * Server info
- *
- * @package   MyAAC
- * @author    Gesior <jerzyskalski@wp.pl>
- * @author    Slawkens <slawkens@gmail.com>
- * @author    whiteblXK
- * @copyright 2019 MyAAC
- * @link      https://my-aac.org
- */
-defined('MYAAC') or die('Direct access not allowed!');
-$title = 'Server info';
+if(!defined('INITIALIZED'))
+	exit;
 
-if(isset($config['lua']['experience_stages']))
-    $config['lua']['experienceStages'] = $config['lua']['experience_stages'];
+if($action == "") {				
+	$main_content .= '
+		<div class="TableContainer">
+			<div class="CaptionContainer">
+				<div class="CaptionInnerContainer"> 
+					<span class="CaptionEdgeLeftTop" style="background-image:url('.$layout_name.'/images/global/content/box-frame-edge.gif);"></span> 
+					<span class="CaptionEdgeRightTop" style="background-image:url('.$layout_name.'/images/global/content/box-frame-edge.gif);"></span> 
+					<span class="CaptionBorderTop" style="background-image:url('.$layout_name.'/images/global/content/table-headline-border.gif);"></span> 
+					<span class="CaptionVerticalLeft" style="background-image:url('.$layout_name.'/images/global/content/box-frame-vertical.gif);"></span>
+					<div class="Text">Information</div>
+					<span class="CaptionVerticalRight" style="background-image:url('.$layout_name.'/images/global/content/box-frame-vertical.gif);"></span> 
+					<span class="CaptionBorderBottom" style="background-image:url('.$layout_name.'/images/global/content/table-headline-border.gif);"></span> 
+					<span class="CaptionEdgeLeftBottom" style="background-image:url('.$layout_name.'/images/global/content/box-frame-edge.gif);"></span> 
+					<span class="CaptionEdgeRightBottom" style="background-image:url('.$layout_name.'/images/global/content/box-frame-edge.gif);"></span> 
+				</div>
+			</div>
+			<table class="Table3" cellpadding="0" cellspacing="0">
+				<tbody>
+					<tr>
+						<td>
+							<div class="InnerTableContainer" >
+								<table style="width:100%;" >
+									<tr>
+										<td>
+											
+											
+												<div class="TableContentContainer" >
+													<table class="TableContent" width="100%">
+														<tr style="background-color:#D4C0A1;" >
+															<td width="30%" class="LabelV">PvP Protection:</td>
+															<td>to level '.$config['server']['protectionLevel'].'</td>
+														</tr>
+														<tr style="background-color:#F1E0C6;" >
+															<td class="LabelV">Exp Rate:</td>
+															<td><li>0 - 8 = 40x<br>
+															<li>9 - 60 = 400x<br>
+															<li>61 - 100 = 350x<br>
+															<li>101 - 200 = 300x<br>
+															<li>201 - 300 = 250x<br>
+															<li>301 - 400 = 200x<br>
+															<li>401 - 500 = 150x<br>
+															<li>501 - 600 = 100x<br>
+															<li>601 - 700 = 80x<br>
+															<li>701 - 800 = 60x<br>
+															<li>801 - 900 = 40x<br>
+															<li>901 - 1000 = 20x<br>
+															<li>1001 - 1200 = 10x<br>
+															<li>1201 - 1400 = 8x<br>
+															<li>1401 - 1600 = 5x<br>
+															<li>1601 - 2000 = 3x<br>
+															<li>2001 - 2200 = 2x<br>
+															<li>2201+ = 1x<br>
+															</td>
+														</tr>
+														<tr style="background-color:#D4C0A1;" >
+															<td class="LabelV">Skill Rate:</td>
+															<td><li>0 - 30 = 60x<br>
+															<li>31 - 60 = 40x<br>
+															<li>61 - 90 = 15x<br>
+															<li>91 - 110 = 12x<br>
+															<li>111 - 130 = 8x<br>
+															<li>131 - 140 = 6x<br>
+															<li>141 - 150 = 4x<br>
+															<li>151+ = 2x
+															</td>
+														</tr>
+														<tr style="background-color:#F1E0C6;" >
+															<td class="LabelV">Magic Rate:</td>
+															<td><li>0 - 30 = 30x<br>
+															<li>31 - 60 = 15x<br>
+															<li>61 - 90 = 10x<br>
+															<li>91 - 110 = 7x<br>
+															<li>111 - 130 = 4x<br>
+															<li>131+ = 2x
+															</td>
+														</tr>
+														<tr style="background-color:#D4C0A1;" >
+															<td class="LabelV">Loot Rate:</td>
+															<td><li>3X</td>
+														</tr>
 
-if(isset($config['lua']['min_pvp_level']))
-    $config['lua']['protectionLevel'] = $config['lua']['min_pvp_level'];
+														<tr style="background-color:#F1E0C6;" >
+															<td class="LabelV">Bestiary:</td>
+															<td><li>5X</td>
+														</tr>
 
-$rent = trim(strtolower($config['lua']['houseRentPeriod']));
-if($rent != 'yearly' && $rent != 'monthly' && $rent != 'weekly' && $rent != 'daily')
-    $rent = 'never';
+														<tr style="background-color:#D4C0A1;" >
+															<td class="LabelV">Bosstiary:</td>
+															<td><li>2X</td>
+														</tr>
+														
+														<tr style="background-color:#F1E0C6;" >
+															<td class="LabelV">Red Skull Dayli:</td>
+															<td><li>8</td>
+														</tr>
+														
+														<tr style="background-color:#D4C0A1;" >
+															<td class="LabelV">Red Skull Weekly:</td>
+															<td><li>15</td>
+														</tr>
+														
+														<tr style="background-color:#F1E0C6;" >
+															<td class="LabelV">Red Skull 1 Monthly:</td>
+															<td><li>20</td>
+														</tr>
+														
+														<tr style="background-color:#D4C0A1;" >
+															<td class="LabelV">House Kick</td>
+															<td><li>5 dias off</td>
+														</tr>
+														
+														<tr style="background-color:#F1E0C6;" >
+															<td class="LabelV">Server Save</td>
+															<td><li>22:30 (BR / UTC-3)</td>
+														</tr>
+														
 
-if(isset($config['lua']['houseCleanOld']))
-    $cleanOld = (int)(eval('return ' . $config['lua']['houseCleanOld'] . ';') / (24 * 60 * 60));
-
-if(isset($config['lua']['rate_exp']))
-    $config['lua']['rateExp'] = $config['lua']['rate_exp'];
-if(isset($config['lua']['rateExperience']))
-    $config['lua']['rateExp'] = $config['lua']['rateExperience'];
-if(isset($config['lua']['rate_mag']))
-    $config['lua']['rateMagic'] = $config['lua']['rate_mag'];
-if(isset($config['lua']['rate_skill']))
-    $config['lua']['rateSkill'] = $config['lua']['rate_skill'];
-if(isset($config['lua']['rate_loot']))
-    $config['lua']['rateLoot'] = $config['lua']['rate_loot'];
-if(isset($config['lua']['rate_spawn']))
-    $config['lua']['rateSpawn'] = $config['lua']['rate_spawn'];
-
-$house_level = NULL;
-if(isset($config['lua']['levelToBuyHouse']))
-    $house_level = $config['lua']['levelToBuyHouse'];
-else if(isset($config['lua']['house_level']))
-    $house_level = $config['lua']['house_level'];
-
-if(isset($config['lua']['in_fight_duration']))
-    $config['lua']['pzLocked'] = $config['lua']['in_fight_duration'];
-
-$pzLocked = eval('return ' . $config['lua']['pzLocked'] . ';');
-$whiteSkullTime = isset($config['lua']['whiteSkullTime']) ? $config['lua']['whiteSkullTime'] : NULL;
-if(!isset($whiteSkullTime) && isset($config['lua']['unjust_skull_duration']))
-    $whiteSkullTime = $config['lua']['unjust_skull_duration'];
-
-if(isset($whiteSkullTime))
-    $whiteSkullTime = eval('return ' . $whiteSkullTime . ';');
-
-$redSkullLength = isset($config['lua']['redSkullLength']) ? $config['lua']['redSkullLength'] : NULL;
-if(!isset($redSkullLength) && isset($config['lua']['red_skull_duration']))
-    $redSkullLength = $config['lua']['red_skull_duration'];
-
-if(isset($redSkullLength))
-    $redSkullLength = eval('return ' . $redSkullLength . ';');
-
-$blackSkull = false;
-$blackSkullLength = NULL;
-if(isset($config['lua']['useBlackSkull']) && getBoolean($config['lua']['useBlackSkull']))
-{
-    $blackSkullLength = $config['lua']['blackSkullLength'];
-    $blackSkull = true;
+													</table>
+												</div>
+											
+											
+											
+											
+											
+											
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div><br>';
 }
-else if(isset($config['lua']['black_skull_duration'])) {
-    $blackSkullLength = eval('return ' . $config['lua']['blackSkullLength'] . ';');
-    $blackSkull = true;
-}
-
-$clientVersion = NULL;
-if(isset($status['online']))
-    $clientVersion = isset($status['clientVersion']) ? $status['clientVersion'] : null;
-
-$twig->display('serverinfo.html.twig', array(
-    'experienceStages' => isset($config['lua']['experienceStages']) && getBoolean($config['lua']['experienceStages']) ? $config['lua']['experienceStages'] : null,
-    'serverIp' => str_replace('/', '', str_replace('http://', '', $config['lua']['url'])),
-    'clientVersion' => $clientVersion,
-    'globalSaveHour' => isset($config['lua']['globalSaveEnabled']) && getBoolean($config['lua']['globalSaveEnabled']) ? $config['lua']['globalSaveHour'] : null,
-    'protectionLevel' => $config['lua']['protectionLevel'],
-    'houseRent' => $rent == 'never' ? 'disabled' : $rent,
-    'houseOld' => isset($cleanOld) ? $cleanOld : null,
-    'rateExp' => $config['lua']['rateExp'],
-    'rateExpFromPlayers' => isset($config['lua']['rateExperienceFromPlayers']) ? $config['lua']['rateExperienceFromPlayers'] : null,
-    'rateMagic' => $config['lua']['rateMagic'],
-    'rateSkill' => $config['lua']['rateSkill'],
-    'rateLoot' => $config['lua']['rateLoot'],
-    'rateSpawn' => $config['lua']['rateSpawn'],
-    'houseLevel' => $house_level,
-    'pzLocked' => $pzLocked,
-    'whiteSkullTime' => $whiteSkullTime,
-    'redSkullLength' => $redSkullLength,
-    'blackSkull' => $blackSkull,
-    'blackSkullLength' => $blackSkullLength,
-    'dailyFragsToRedSkull' => isset($config['lua']['dailyFragsToRedSkull']) ? $config['lua']['dailyFragsToRedSkull'] : (isset($config['lua']['kills_per_day_red_skull']) ? $config['lua']['kills_per_day_red_skull'] : null),
-    'weeklyFragsToRedSkull' => isset($config['lua']['weeklyFragsToRedSkull']) ? $config['lua']['weeklyFragsToRedSkull'] : (isset($config['lua']['kills_per_week_red_skull']) ? $config['lua']['kills_per_week_red_skull'] : null),
-    'monthlyFragsToRedSkull' => isset($config['lua']['monthlyFragsToRedSkull']) ? $config['lua']['monthlyFragsToRedSkull'] : (isset($config['lua']['kills_per_month_red_skull']) ? $config['lua']['kills_per_month_red_skull'] : null),
-    'dailyFragsToBlackSkull' => isset($config['lua']['dailyFragsToBlackSkull']) ? $config['lua']['dailyFragsToBlackSkull'] : (isset($config['lua']['kills_per_day_black_skull']) ? $config['lua']['kills_per_day_black_skull'] : null),
-    'weeklyFragsToBlackSkull' => isset($config['lua']['weeklyFragsToBlackSkull']) ? $config['lua']['weeklyFragsToBlackSkull'] : (isset($config['lua']['kills_per_week_black_skull']) ? $config['lua']['kills_per_week_black_skull'] : null),
-    'monthlyFragsToBlackSkull' => isset($config['lua']['monthlyFragsToBlackSkull']) ? $config['lua']['monthlyFragsToBlackSkull'] : (isset($config['lua']['kills_per_month_black_skull']) ? $config['lua']['kills_per_month_black_skull'] : null),
-    'banishmentLength' => isset($config['lua']['banishment_length']) ? eval('return (' . $config['lua']['banishment_length'] . ') / (24 * 60 * 60);') : null,
-    'finalBanishmentLength' => isset($config['lua']['final_banishment_length']) ? eval('return (' . $config['lua']['final_banishment_length'] . ') / (24 * 60 * 60);') : null,
-    'ipBanishmentLength' => isset($config['lua']['ip_banishment_length']) ? eval('return (' . $config['lua']['ip_banishment_length'] . ') / (24 * 60 * 60);') : null,
-));

@@ -17,3 +17,4 @@
 			'thumb' => str_replace('/screenshots/', '/gallery/', $item['thumb']),
 		), array('id' => $item['id']));
 	}
+?>

@@ -36,3 +36,5 @@ class E_OTS_Generic extends E_OTS_ErrorCode
 }
 
 /**#@-*/
+
+?>

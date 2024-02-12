@@ -41,3 +41,4 @@ class Data
 		return $db->update($this->table, $data, $where);
 	}
 }
+?>

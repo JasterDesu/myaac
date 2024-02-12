@@ -13,9 +13,9 @@ defined('MYAAC') or die('Direct access not allowed!');
 if(Forum::canPost($account_logged))
 {
 	$players_from_account = $db->query('SELECT `players`.`name`, `players`.`id` FROM `players` WHERE `players`.`account_id` = '.(int) $account_logged->getId())->fetchAll();
-	$section_id = $_REQUEST['section_id'] ?? null;
+	$section_id = isset($_REQUEST['section_id']) ? $_REQUEST['section_id'] : null;
 	if($section_id !== null) {
-		echo '<a href="' . getLink('forum') . '">Boards</a> >> <a href="' . getForumBoardLink($section_id) . '">' . $sections[$section_id]['name'] . '</a> >> <b>Post new thread</b><br />';
+		echo '<div class="ForumBreadCrumbs"><a href="' . getLink('forum') . '">Community Boards</a> | <a href="' . getForumBoardLink($section_id) . '">' . $sections[$section_id]['name'] . '</a> | <b>Post new thread</b></div><br />';
 		if(isset($sections[$section_id]['name']) && Forum::hasAccess($section_id)) {
 			if ($sections[$section_id]['closed'] && !Forum::isModerator())
 				$errors[] = 'You cannot create topic on this board.';
@@ -26,20 +26,24 @@ if(Forum::canPost($account_logged))
 			$post_topic = isset($_REQUEST['topic']) ? stripslashes($_REQUEST['topic']) : '';
 			$smile = (isset($_REQUEST['smile']) ? (int)$_REQUEST['smile'] : 0);
 			$html = (isset($_REQUEST['html']) ? (int)$_REQUEST['html'] : 0);
-
-			if (!superAdmin()) {
-				$html = 0;
-			}
-
 			$saved = false;
 			if (isset($_REQUEST['save'])) {
-				$length = strlen($post_topic);
-				if ($length < 1 || $length > 60)
-					$errors[] = "Too short or too long topic (Length: $length letters). Minimum 1 letter, maximum 60 letters.";
+				$errors = array();
 
-				$length = strlen($text);
-				if ($length < 1 || $length > 15000)
-					$errors[] = "Too short or too long post (Length: $length letters). Minimum 1 letter, maximum 15000 letters.";
+				$lenght = 0;
+				for ($i = 0; $i < strlen($post_topic); $i++) {
+					if (ord($post_topic[$i]) >= 33 && ord($post_topic[$i]) <= 126)
+						$lenght++;
+				}
+				if ($lenght < 1 || strlen($post_topic) > 60)
+					$errors[] = 'Too short or too long topic (short: ' . $lenght . ' long: ' . strlen($post_topic) . ' letters). Minimum 1 letter, maximum 60 letters.';
+				$lenght = 0;
+				for ($i = 0; $i < strlen($text); $i++) {
+					if (ord($text[$i]) >= 33 && ord($text[$i]) <= 126)
+						$lenght++;
+				}
+				if ($lenght < 1 || strlen($text) > 15000)
+					$errors[] = 'Too short or too long post (short: ' . $lenght . ' long: ' . strlen($text) . ' letters). Minimum 1 letter, maximum 15000 letters.';
 
 				if ($char_id == 0)
 					$errors[] = 'Please select a character.';
@@ -89,17 +93,13 @@ if(Forum::canPost($account_logged))
 				));
 			}
 		}
-		else {
-			$errors[] = "Board with ID $section_id doesn't exist.";
-			displayErrorBoxWithBackButton($errors, getLink('forum'));
-		}
+		else
+			echo 'Board with ID ' . $board_id . ' doesn\'t exist.';
 	}
-	else {
-		$errors[] = 'Please enter section_id.';
-		displayErrorBoxWithBackButton($errors, getLink('forum'));
-	}
+	else
+		echo 'Please enter section_id.';
 }
-else {
-	$errors[] = 'Your account is banned, deleted or you don\'t have any player with level '.$config['forum_level_required'].' on your account. You can\'t post.';
-	displayErrorBoxWithBackButton($errors, getLink('forum'));
-}
+else
+	echo 'Your account is banned, deleted or you don\'t have any player with level '.$config['forum_level_required'].' on your account. You can\'t post.';
+
+?>

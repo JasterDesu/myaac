@@ -47,20 +47,21 @@ if($config['online_outfit']) {
 
 if($config['online_vocations']) {
 	$vocs = array();
-	foreach($config['vocations'] as $id => $name)
+	foreach($config['vocations'] as $id => $name) {
 		$vocs[$id] = 0;
+	}
 }
 
 if($db->hasTable('players_online')) // tfs 1.0
-	$playersOnline = $db->query('SELECT `accounts`.`country`, `players`.`name`, `players`.`level`, `players`.`vocation`' . $outfit . ', `' . $skull_time . '` as `skulltime`, `' . $skull_type . '` as `skull` FROM `accounts`, `players`, `players_online` WHERE `players`.`id` = `players_online`.`player_id` AND `accounts`.`id` = `players`.`account_id`  ORDER BY ' . $order);
+	$playersOnline = $db->query('SELECT `accounts`.`country`, `players`.`name`, `level`, `vocation`' . $outfit . ', `' . $skull_time . '` as `skulltime`, `' . $skull_type . '` as `skull` FROM `accounts`, `players`, `players_online` WHERE `players`.`id` = `players_online`.`player_id` AND `accounts`.`id` = `players`.`account_id`  ORDER BY ' . $order);
 else
-	$playersOnline = $db->query('SELECT `accounts`.`country`, `players`.`name`, `players`.`level`, `players`.`vocation`' . $outfit . ', ' . $promotion . ' `' . $skull_time . '` as `skulltime`, `' . $skull_type . '` as `skull` FROM `accounts`, `players` WHERE `players`.`online` > 0 AND `accounts`.`id` = `players`.`account_id`  ORDER BY ' . $order);
+	$playersOnline = $db->query('SELECT `accounts`.`country`, `players`.`name`, `level`, `vocation`' . $outfit . ', ' . $promotion . ' `' . $skull_time . '` as `skulltime`, `' . $skull_type . '` as `skull` FROM `accounts`, `players` WHERE `players`.`online` > 0 AND `accounts`.`id` = `players`.`account_id`  ORDER BY ' . $order);
 
 $players_data = array();
+$explodeFlags = array();
 $players = 0;
 $data = '';
-foreach($playersOnline as $player)
-{
+foreach($playersOnline as $player){
 	$skull = '';
 	if($config['online_skulls'])
 	{
@@ -89,40 +90,37 @@ foreach($playersOnline as $player)
 		'outfit' => $config['online_outfit'] ? $config['outfit_images_url'] . '?id=' . $player['looktype'] . ($outfit_addons ? '&addons=' . $player['lookaddons'] : '') . '&head=' . $player['lookhead'] . '&body=' . $player['lookbody'] . '&legs=' . $player['looklegs'] . '&feet=' . $player['lookfeet'] : null
 	);
 
-	if($config['online_vocations'])
+	if($config['online_vocations']) {
 		$vocs[($player['vocation'] > $config['vocations_amount'] ? $player['vocation'] - $config['vocations_amount'] : $player['vocation'])]++;
-}
-
-$record = '';
-if($players > 0)
-{
-	if($config['online_record'])
-	{
-		$timestamp = false;
-		if($db->hasTable('server_record')) {
-			$query =
-				$db->query(
-					'SELECT `record`, `timestamp` FROM `server_record` WHERE `world_id` = ' . (int)$config['lua']['worldId'] .
-					' ORDER BY `record` DESC LIMIT 1');
-			$timestamp = true;
-		}
-		else if($db->hasTable('server_config')) { // tfs 1.0
-			$query = $db->query('SELECT `value` as `record` FROM `server_config` WHERE `config` = ' . $db->quote('players_record'));
-		}
-		else
-			$query = NULL;
-
-		if(isset($query) && $query->rowCount() > 0)
-		{
-			$result = $query->fetch();
-			$record = 'The maximum on this game world was ' . $result['record'] . ' players' . ($timestamp ? ' on ' . date("M d Y, H:i:s", $result['timestamp']) . '.' : '.');
-		}
 	}
 }
 
-$twig->display('online.html.twig', array(
+$record = '';
+if($config['online_record']){
+	$timestamp = false;
+	if($db->hasTable('server_record')) {
+		$query =
+			$db->query(
+				'SELECT `record`, `timestamp` FROM `server_record` WHERE `world_id` = ' . (int)$config['lua']['worldId'] .
+				' ORDER BY `record` DESC LIMIT 1');
+		$timestamp = true;
+	}else if($db->hasTable('server_config')) { // tfs 1.0
+		$query = $db->query('SELECT `timestamp`, `value` as `record` FROM `server_config` WHERE `config` = ' . $db->quote('players_record'));
+	}else{
+		$query = NULL;
+	}
+
+	if(isset($query) && $query->rowCount() > 0){
+		$result = $query->fetch();
+		$record = '' . $result['record'] . ' players<br><small>'.date('d/m/Y, H:i:s', strtotime($result['timestamp'])).'</small>';
+	}
+}
+
+$twig->display('online2.html.twig', array(
 	'players' => $players_data,
-	'record' => $record
+	'record' => $record,
+	'current_date' => date('d/m/Y'),
+	'vocs' => $vocs,
 ));
 
 //search bar

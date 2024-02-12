@@ -168,3 +168,4 @@
 	}
 
 	$MadGD->save($player->getID());
+?>

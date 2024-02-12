@@ -7,9 +7,10 @@
  * @copyright 2019 MyAAC
  * @link      https://my-aac.org
  */
-defined('MYAAC') or die('Direct access not allowed!');
 
 use Twig\Loader\ArrayLoader as Twig_ArrayLoader;
+
+defined('MYAAC') or die('Direct access not allowed!');
 
 function message($message, $type, $return)
 {
@@ -167,7 +168,7 @@ function getItemImage($id, $count = 1)
 		$file_name .= '-' . $count;
 
 	global $config;
-	return '<img src="' . $config['item_images_url'] . $file_name . '.gif"' . $tooltip . ' width="32" height="32" border="0" alt="' .$id . '" />';
+	return '<img src="' . $config['item_images_url'] . $file_name . '.png"' . $tooltip . ' width="32" height="32" border="0" alt="' .$id . '" />';
 }
 
 function getFlagImage($country)
@@ -517,21 +518,21 @@ function template_footer()
 	{
 		global $visitors;
 		$amount = $visitors->getAmountVisitors();
-		$ret .= '<br/>Currently there ' . ($amount > 1 ? 'are' : 'is') . ' ' . $amount . ' visitor' . ($amount > 1 ? 's' : '') . '.';
+		$ret .= '<br/>Currently there ' . ($amount > 1 ? 'are' : 'is') . ' ' . $amount . ' visitor' . ($amount > 1 ? 's' : '') . '. • ';
 	}
 
 	if($config['views_counter'])
-		$ret .= '<br/>Page has been viewed ' . $views_counter . ' times.';
+		$ret .= 'Page has been viewed ' . $views_counter . ' times. • ';
 
 	if(config('footer_show_load_time')) {
-		$ret .= '<br/>Load time: ' . round(microtime(true) - START_TIME, 4) . ' seconds.';
+		$ret .= 'Load time: ' . round(microtime(true) - START_TIME, 4) . ' seconds.';
 	}
 
 	if(isset($config['footer'][0]))
 		$ret .= '<br/>' . $config['footer'];
 
 	// please respect my work and help spreading the word, thanks!
-	return $ret . '<br/>' . base64_decode('UG93ZXJlZCBieSA8YSBocmVmPSJodHRwOi8vbXktYWFjLm9yZyIgdGFyZ2V0PSJfYmxhbmsiPk15QUFDLjwvYT4=');
+	return $ret . '<br/> Copyright by Myaac. All rights reserved.';
 }
 
 function template_ga_code()
@@ -756,10 +757,10 @@ function get_browser_languages()
 {
 	$ret = array();
 
-	if(empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+	$acceptLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	if(!isset($acceptLang[0]))
 		return $ret;
 
-	$acceptLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 	$languages = strtolower($acceptLang);
 	// $languages = 'pl,en-us;q=0.7,en;q=0.3 ';
 	// need to remove spaces from strings to avoid error
@@ -797,7 +798,7 @@ function get_plugins()
 	$ret = array();
 
 	$path = PLUGINS;
-	foreach(scandir($path, SCANDIR_SORT_ASCENDING) as $file) {
+	foreach(scandir($path, 0) as $file) {
 		$file_ext = pathinfo($file, PATHINFO_EXTENSION);
 		$file_name = pathinfo($file, PATHINFO_FILENAME);
 		if ($file === '.' || $file === '..' || $file === 'disabled' || $file === 'example.json' || $file_ext !== 'json' || is_dir($path . $file))
@@ -891,7 +892,7 @@ function _mail($to, $subject, $body, $altBody = '', $add_html_tags = true)
 
 	ob_start();
 	if(!$mailer->Send()) {
-		log_append('mailer-error.log', PHP_EOL . $mailer->ErrorInfo . PHP_EOL . ob_get_clean());
+		// log_append('mailer-error.log', PHP_EOL . $mailer->ErrorInfo . PHP_EOL . ob_get_clean());
 		return false;
 	}
 
@@ -923,8 +924,8 @@ function load_config_lua($filename)
 	$config_file = $filename;
 	if(!@file_exists($config_file))
 	{
-		log_append('error.log', '[load_config_file] Fatal error: Cannot load config.lua (' . $filename . ').');
-		throw new RuntimeException('ERROR: Cannot find ' . $filename . ' file.');
+		log_append('error.log', '[load_config_file] Fatal error: Cannot load config.lua (' . $filename . '). Error: ' . print_r(error_get_last(), true));
+		throw new RuntimeException('ERROR: Cannot find ' . $filename . ' file. More info in system/logs/error.log');
 	}
 
 	$result = array();
@@ -1113,6 +1114,7 @@ function clearCache()
 {
 	require_once LIBS . 'news.php';
 	News::clearCache();
+	clearBoostedCache();
 
 	$cache = Cache::getInstance();
 
@@ -1146,30 +1148,9 @@ function clearCache()
 		if ($cache->fetch('failed_logins', $tmp))
 			$cache->delete('failed_logins');
 
-		foreach (get_templates() as $template) {
-			if ($cache->fetch('template_ini_' . $template, $tmp)) {
-				$cache->delete('template_ini_' . $template);
-			}
-		}
-
-		if ($cache->fetch('template_menus', $tmp)) {
-			$cache->delete('template_menus');
-		}
-		if ($cache->fetch('database_tables', $tmp)) {
-			$cache->delete('database_tables');
-		}
-		if ($cache->fetch('database_columns', $tmp)) {
-			$cache->delete('database_columns');
-		}
-		if ($cache->fetch('database_checksum', $tmp)) {
-			$cache->delete('database_checksum');
-		}
-		if ($cache->fetch('hooks', $tmp)) {
-			$cache->delete('hooks');
-		}
-		if ($cache->fetch('last_kills', $tmp)) {
-			$cache->delete('last_kills');
-		}
+		global $template_name;
+		if ($cache->fetch('template_ini' . $template_name, $tmp))
+			$cache->delete('template_ini' . $template_name);
 	}
 
 	deleteDirectory(CACHE . 'signatures', ['index.html'], true);
@@ -1264,40 +1245,123 @@ function getCustomPage($page, &$success)
 	return $content;
 }
 
-function escapeHtml($html) {
-	return htmlentities($html, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-}
-
-function displayErrorBoxWithBackButton($errors, $action = null) {
-	global $twig;
-	$twig->display('error_box.html.twig', ['errors' => $errors]);
-	$twig->display('account.back_button.html.twig', [
-		'action' => $action ?: getLink('')
-	]);
-}
-
-function getDatabasePages($withHidden = false): array
+function getAccountLoginByLabel()
 {
-	global $db, $logged_access;
-
-	if (!isset($logged_access)) {
-		$logged_access = 1;
+	$ret = '';
+	if (config('account_login_by_email')) {
+		$ret = 'Email Address';
+		if (config('account_login_by_email_fallback')) {
+			$ret .= ' or ';
+		}
 	}
-
-	$pages = $db->query('SELECT `name` FROM ' . TABLE_PREFIX . 'pages WHERE ' . ($withHidden ? '' : '`hidden` != 1 AND ') . '`access` <= ' . $db->quote($logged_access));
-	$ret = [];
-
-	if ($pages->rowCount() < 1) {
-		return $ret;
+	if (!config('account_login_by_email') || config('account_login_by_email_fallback')) {
+		$ret .= 'Account ' . (USE_ACCOUNT_NAME ? 'Name' : 'Number');
 	}
-
-	foreach($pages->fetchAll() as $page) {
-		$ret[] = $page['name'];
-	}
-
 	return $ret;
+}
+
+function storeDonateLogs($origin, $transaction_code, $amount, $ref_1, $accountid = 0, $account_name = '', $ref_2 = '', $ref_3 = ''){
+	global $db;
+	if (!$origin || !$transaction_code || !$amount || !$ref_1) {
+		return false;
+	}
+	$values = sprintf("('%s', '%s', '%s', '%s', %d, '%s', '%s', %d);", $origin, $ref_1, $ref_2, $ref_3, $accountid, $account_name, $transaction_code, $amount);
+	$db->query('INSERT INTO `donates_log` (`origin`, `ref_1`, `ref_2`, `ref_3`, `account_id`, `account_name`, `transaction_code`, `amount`) values '.$values);
+	return true;
+}
+
+function getBoostedMonster()
+{
+	global $config;
+	global $db;
+	
+	$cache = Cache::getInstance();
+	if($cache->enabled()) {
+		$tmp = '';
+		if($cache->fetch('boosted_creature', $tmp)) {
+			$boosted = unserialize($tmp);
+		}
+	}
+	
+	if(!isset($boosted)) {
+		$boosted = $db->query("SELECT * FROM `boosted_creature` LIMIT 1;")->fetch();
+		if($cache->enabled()) {
+			$cache->set('boosted_creature', serialize($boosted), 120); // 1h
+		}
+	}
+	
+	$result = array();
+	
+	if (!$boosted || $boosted['looktype'] == 0) {
+		$result['outfit'] = $config["outfit_images_url"] . "?id=1272&addons=0&head=0&body=0&legs=0&feet=0&mount=0&direction=3";
+		$result['name'] = "";
+		$result['raceid'] = 1272;
+		return $result;
+	}
+	
+	$result['outfit'] = $config["outfit_images_url"] . "?id=".$boosted['looktype']."&addons=".$boosted['lookaddons']."&head=".$boosted['lookhead']."&body=".$boosted['lookbody']."&legs=".$boosted['looklegs']."&feet=".$boosted['lookfeet']."&mount=".$boosted['lookmount']."&direction=3";;
+	$result['name'] = $boosted['boostname'];
+	$result['raceid'] = $boosted['raceid'];
+	return $result;
+}
+
+function getBoostedBoss()
+{
+	global $config;
+	global $db;
+	
+	$cache = Cache::getInstance();
+	if($cache->enabled()) {
+		$tmp = '';
+		if($cache->fetch('boosted_boss', $tmp)) {
+			$boosted = unserialize($tmp);
+		}
+	}
+	
+	if(!isset($boosted)) {
+		$boosted = $db->query("SELECT * FROM `boosted_boss` LIMIT 1;")->fetch();
+		if($cache->enabled()) {
+			$cache->set('boosted_boss', serialize($boosted), 120);
+		}
+	}
+	
+	$result = array();
+	
+	if (!$boosted || $boosted['looktype'] == 0) {
+		$result['outfit'] = $config["outfit_images_url"] . "?id=1272&addons=0&head=0&body=0&legs=0&feet=0&mount=0&direction=3";
+		$result['name'] = "";
+		$result['raceid'] = 1272;
+		return $result;
+	}
+	
+	$result['outfit'] = $config["outfit_images_url"] . "?id=".$boosted['looktype']."&addons=".$boosted['lookaddons']."&head=".$boosted['lookhead']."&body=".$boosted['lookbody']."&legs=".$boosted['looklegs']."&feet=".$boosted['lookfeet']."&mount=".$boosted['lookmount']."&direction=3";;
+	$result['name'] = $boosted['boostname'];
+	$result['raceid'] = $boosted['bossid'];
+	return $result;
+}
+
+function clearBoostedCache()
+{
+	$cache = Cache::getInstance();
+	if($cache->enabled()) {
+		$tmp = '';
+		if($cache->fetch('boosted_creature', $tmp)) {
+			$cache->delete('boosted_creature');
+		}
+		if($cache->fetch('boosted_boss', $tmp)) {
+			$cache->delete('boosted_boss');
+		}
+	}
+}
+
+function getBackupCoins($account_id)
+{
+	global $db;
+	$backupcoins = $db->query("SELECT `backup_coins` FROM `accounts` WHERE `id` = {$account_id};");
+	$backupcoins = $backupcoins->fetch();
+	return $backupcoins['backup_coins'];
 }
 
 // validator functions
 require_once LIBS . 'validator.php';
-require_once SYSTEM . 'compat/base.php';
+require_once SYSTEM . 'compat.php';

@@ -66,7 +66,7 @@ class Plugins {
 				continue;
 			}
 
-			if(isset($plugin['enabled']) && !getBoolean($plugin['enabled'])) {
+			if(isset($plugin['enabled']) && $plugin['enabled'] === 0) {
 				self::$warnings[] = 'Skipping ' . $filename . '... The plugin is disabled.';
 				continue;
 			}
@@ -74,10 +74,6 @@ class Plugins {
 			if (isset($plugin['hooks'])) {
 				foreach ($plugin['hooks'] as $_name => $info) {
 					if (defined('HOOK_'. $info['type'])) {
-						if (strpos($info['type'], 'HOOK_') !== false) {
-							$info['type'] = str_replace('HOOK_', '', $info['type']);
-						}
-
 						$hook = constant('HOOK_'. $info['type']);
 						$hooks[] = ['name' => $_name, 'type' => $hook, 'file' => $info['file']];
 					} else {

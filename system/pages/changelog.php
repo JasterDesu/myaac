@@ -8,6 +8,7 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
+die(header('Location: ' . BASE_URL));
 $title = 'Changelog';
 
 $_page = isset($_GET['page']) ? $_GET['page'] : 0;

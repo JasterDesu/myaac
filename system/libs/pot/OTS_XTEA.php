@@ -151,3 +151,5 @@ class OTS_XTEA implements IOTS_Cipher
 }
 
 /**#@-*/
+
+?>

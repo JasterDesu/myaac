@@ -31,6 +31,9 @@ if($config['gzip_output'] && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($
 require_once SYSTEM . 'libs/cache.php';
 $cache = Cache::getInstance();
 
+// twig
+require_once SYSTEM . 'twig.php';
+
 // trim values we receive
 if(isset($_POST))
 {
@@ -111,7 +114,7 @@ if(!isset($foundValue)) {
 $config['data_path'] = $foundValue;
 unset($foundValue);
 
-// new config values for compatibility
+// new config values for compability
 if(!isset($config['highscores_ids_hidden']) || count($config['highscores_ids_hidden']) == 0) {
 	$config['highscores_ids_hidden'] = array(0);
 }
@@ -123,10 +126,9 @@ require_once SYSTEM . 'libs/pot/OTS.php';
 $ots = POT::getInstance();
 require_once SYSTEM . 'database.php';
 
-// twig
-require_once SYSTEM . 'twig.php';
-
 define('USE_ACCOUNT_NAME', $db->hasColumn('accounts', 'name'));
+define('USE_ACCOUNT_NUMBER', $db->hasColumn('accounts', 'number'));
+
 // load vocation names
 $tmp = '';
 if($cache->enabled() && $cache->fetch('vocations', $tmp)) {

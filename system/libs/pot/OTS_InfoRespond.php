@@ -387,3 +387,5 @@ class OTS_InfoRespond extends DOMDocument
 }
 
 /**#@-*/
+
+?>

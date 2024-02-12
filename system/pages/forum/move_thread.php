@@ -14,13 +14,12 @@ if(!Forum::isModerator()) {
 	echo 'You are not logged in or you are not moderator.';
 }
 
-$save = isset($_REQUEST['save']) && (int)$_REQUEST['save'] == 1;
+$save = isset($_REQUEST['save']) ? (int)$_REQUEST['save'] == 1 : false;
 if($save) {
 	$post_id = (int)$_REQUEST['id'];
 	$board = (int)$_REQUEST['section'];
 	if(!Forum::hasAccess($board)) {
-		$errors[] = "You don't have access to this board.";
-		displayErrorBoxWithBackButton($errors, getLink('forum'));
+		echo "You don't have access to this board.";
 		return;
 	}
 
@@ -32,10 +31,8 @@ if($save) {
 			header('Location: ' . getForumBoardLink($nPost['section']));
 		}
 	}
-	else {
-		$errors[] = 'Post with ID ' . $post_id . ' does not exist.';
-		displayErrorBoxWithBackButton($errors, getLink('forum'));
-	}
+	else
+		echo 'Post with ID ' . $post_id . ' does not exist.';
 }
 else {
 	$post_id = (int)$_REQUEST['id'];
@@ -61,8 +58,7 @@ else {
 			));
 		}
 	}
-	else {
-		$errors[] = 'Post with ID ' . $post_id . ' does not exist.';
-		displayErrorBoxWithBackButton($errors, getLink('forum'));
-	}
+	else
+		echo 'Post with ID ' . $post_id . ' does not exist.';
 }
+?>

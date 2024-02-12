@@ -61,8 +61,8 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
 
 		// check if monsters.xml exist
 		if(!@file_exists($this->monstersPath . 'monsters.xml')) {
-			log_append('error.log', '[OTS_MonstersList.php] Fatal error: Cannot load monsters.xml. File does not exist. (' . $this->monstersPath . 'monsters.xml' . ').');
-			throw new Exception('Error: Cannot load monsters.xml. File not found.');
+			log_append('error.log', '[OTS_MonstersList.php] Fatal error: Cannot load monsters.xml. File does not exist. (' . $this->monstersPath . 'monsters.xml' . '). Error: ' . print_r(error_get_last(), true));
+			throw new Exception('Error: Cannot load monsters.xml. File not found. More info in system/logs/error.log file.');
 		}
 		
         // loads monsters mapping file
@@ -163,7 +163,7 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
  * 
  * @return int Count of monsters.
  */
-    public function count(): int
+    public function count()
     {
         return count($this->monsters);
     }
@@ -174,7 +174,6 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
  * @return OTS_Monster Monster.
  * @throws DOMException On DOM operation error.
  */
-	#[\ReturnTypeWillChange]
     public function current()
     {
         return $this->getMonster( key($this->monsters) );
@@ -188,7 +187,7 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
 /**
  * Moves to next iterator monster.
  */
-    public function next(): void
+    public function next()
     {
         next($this->monsters);
     }
@@ -198,7 +197,6 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
  * 
  * @return string Current position key.
  */
-	#[\ReturnTypeWillChange]
     public function key()
     {
         return key($this->monsters);
@@ -209,7 +207,7 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
  * 
  * @return bool If iterator has anything more.
  */
-    public function valid(): bool
+    public function valid()
     {
         return key($this->monsters) !== null;
     }
@@ -217,7 +215,7 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
 /**
  * Resets iterator index.
  */
-    public function rewind(): void
+    public function rewind()
     {
         reset($this->monsters);
     }
@@ -228,7 +226,6 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
  * @param string $offset Array key.
  * @return bool True if it's set.
  */
-	#[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->monsters[$offset]);
@@ -242,7 +239,6 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
  * @return OTS_Monster Monster instance.
  * @throws DOMException On DOM operation error.
  */
-	#[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->getMonster($offset);
@@ -255,7 +251,6 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
  * @param mixed $value Field value.
  * @throws E_OTS_ReadOnly Always - this class is read-only.
  */
-	#[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new E_OTS_ReadOnly();
@@ -267,7 +262,6 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
  * @param string|int $offset Array key.
  * @throws E_OTS_ReadOnly Always - this class is read-only.
  */
-	#[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new E_OTS_ReadOnly();
@@ -299,3 +293,5 @@ class OTS_MonstersList implements Iterator, Countable, ArrayAccess
 }
 
 /**#@-*/
+
+?>
